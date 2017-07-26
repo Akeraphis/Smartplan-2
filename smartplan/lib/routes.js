@@ -9,6 +9,6 @@ FlowRouter.route('/', {
 FlowRouter.route('/dataLayer', {
 	name : 'dataLayer',
 	action() {
-		BlazeLayout.render('MainLayout', {main: 'dataLayer'});
+		BlazeLayout.render('MainLayout', {main: 'DataLayer_Main'});
 	}
 });
