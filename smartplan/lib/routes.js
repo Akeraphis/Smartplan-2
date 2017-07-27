@@ -32,3 +32,17 @@ FlowRouter.route('/administration', {
 		BlazeLayout.render('Administration_Main');
 	}
 });
+
+FlowRouter.route('/administration/companies', {
+	name : 'companies',
+	action(){
+		BlazeLayout.render('Administration_Main', {main: 'Companies_Main'});
+	}
+});
+
+FlowRouter.route('/administration/companies/new', {
+	name : 'companies',
+	action(){
+		BlazeLayout.render('Administration_Main', {main: 'Companies_New'});
+	}
+});
