@@ -1,4 +1,4 @@
-Meteor.subscribe("Companies");
+Meteor.subscribe("companies");
 
 Template.Companies_Main.helpers({
 	'companies' : function(){

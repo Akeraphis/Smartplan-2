@@ -1,6 +1,15 @@
 <template name="Companies_Main">
 	<h4><a href="/administration/companies/new"><i class="fa fa-plus-circle"></i> New Company</a></h4>
-	{{#each companies}}
-		{{name}}
-	{{/each}}
+	<section class="recipes">
+		{{#each companies}}
+			<article class = "recipe">
+				<h3>{{name}}</h3>
+				<ul>
+					{{#each employees}}
+						<li>{{name}} - {{role}}</li>
+					{{/each}}
+				</ul>
+			</article>
+		{{/each}}
+	</section>
 </template>
