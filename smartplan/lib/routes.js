@@ -1,6 +1,30 @@
+//Login & Logout of the application redirect
+if(Meteor.isClient){
+	Accounts.onLogin(function(){
+		FlowRouter.go('applications');
+	});
+
+	Accounts.onLogout(function(){
+		FlowRouter.go("home");
+	});
+};
+//--------------------------------------------------------------
+
+//Redirect to home for any url and if not logged-in
+FlowRouter.triggers.enter([function(context, redirect){
+	if(!Meteor.userId()) {
+		FlowRouter.go('home');
+	}
+}]);
+//--------------------------------------------------------------
+
+//Routes
 FlowRouter.route('/', {
 	name : 'home',
 	action() {
+		if (Meteor.userId()) {
+			FlowRouter.go('applications');
+		}
 		BlazeLayout.render('HomeLayout');
 	}
 });
@@ -46,3 +70,4 @@ FlowRouter.route('/administration/companies/new', {
 		BlazeLayout.render('Administration_Main', {main: 'Companies_New'});
 	}
 });
+//--------------------------------------------------------------
