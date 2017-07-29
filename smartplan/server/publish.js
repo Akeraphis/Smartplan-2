@@ -5,3 +5,7 @@ Meteor.publish('dataLayers', function(){
 Meteor.publish('companies', function(){
 	return Companies.find({});
 });
+
+Meteor.publish('profiles', function(){
+	return Profiles.find({});
+});

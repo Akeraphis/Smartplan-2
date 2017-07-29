@@ -64,10 +64,24 @@ FlowRouter.route('/administration/companies', {
 	}
 });
 
+FlowRouter.route('/administration/profiles', {
+	name : 'profiles',
+	action(){
+		BlazeLayout.render('Administration_Main', {main: 'Profiles_Main'});
+	}
+});
+
 FlowRouter.route('/administration/companies/new', {
-	name : 'companies',
+	name : 'new_company',
 	action(){
 		BlazeLayout.render('Administration_Main', {main: 'Companies_New'});
+	}
+});
+
+FlowRouter.route('/administration/profiles/update/:id', {
+	name : 'update_profile',
+	action(){
+		BlazeLayout.render('Administration_Main', {main: 'Profile_Update'});
 	}
 });
 //--------------------------------------------------------------

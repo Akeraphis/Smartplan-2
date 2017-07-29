@@ -3,27 +3,9 @@ Companies = new Mongo.Collection('companies');
 Companies.allow({
 	insert: function(userId, doc){
 		return !!userId; //Authorize everybody who is logged in to add a data layer
-	}
-});
-
-Employee = new SimpleSchema({
-	name : {
-		type : String,
-		label : 'Employee Name',
 	},
-	role : {
-		type : String,
-		label : 'Employee Role',
-	},
-	createdAt: {
-		type: Date,
-		label :"Created At",
-		autoValue: function(){
-			return new Date()
-		},
-		autoform: {
-			type : "hidden"
-		}
+	update: function(userId, doc){
+		return !!userId;
 	},
 });
 
@@ -31,6 +13,10 @@ CompanySchema = new SimpleSchema({
 	name : {
 		type : String,
 		label : 'Company Name',
+	},
+	desc : {
+		type : String,
+		 label: 'Description',
 	},
 	createdAt: {
 		type: Date,
@@ -51,9 +37,6 @@ CompanySchema = new SimpleSchema({
 		autoform: {
 			type : "hidden"
 		},
-	},
-	employees : {
-		type: [Employee]
 	},
 });
 

@@ -1,0 +1,24 @@
+<template name="Profiles_Main">
+	<section class="recipes">
+		{{#each profiles}}
+			<article class = "recipe">
+				<h3>{{name}}</h3>
+				<ul>
+					<li>Profile id : {{_id}}</li>
+					<li>User id : {{user._id}}</li>
+					<li>Company id : {{company.id}}</li>
+					<li>Company Name : {{company.name}}</li>
+					<li>User emails :
+						<ul>
+							{{#each user.emails}}
+								<li>{{address}}</li>
+							{{/each}}
+						</ul>
+					</li>
+				</ul>
+				<button class="btn-info update-user"><i class="fa fa-user-o"></i> Update User</button>
+				<button class="btn-danger delete-user"><i class="fa fa-user-times"></i> Delete User</button>
+			</article>
+		{{/each}}
+	</section>
+</template>

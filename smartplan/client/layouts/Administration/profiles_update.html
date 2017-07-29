@@ -1,0 +1,20 @@
+<template name="Profile_Update">
+	<div class="update-profile-container">
+		<h3>Profile id : {{profile._id}}</h3>
+		{{> quickForm collection="Profiles" doc=this id="updateProfileForm" type="update"}}
+
+
+		<!--{{#autoForm collection="Profiles" id="updateProfileForm" type="update" doc=this}}
+		<fieldset>
+			<legend>Upate the profile</legend>
+			Name : {{> afQuickField name=this.current.name}}
+			Role : {{> afQuickField name=this.current.role}}
+			Emails :
+			{{#each afFieldNames name="emails"}}
+				{{> afQuickField name=this.current.user.emails}}
+			{{/each}}
+		</fieldset>
+		<button type="submit" class="btn btn-primary">Update</button>
+		{{/autoForm}}-->
+	</div>
+</template>
