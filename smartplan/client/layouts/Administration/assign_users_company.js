@@ -3,8 +3,13 @@ Template.Assign_Users.helpers({
 		var id= FlowRouter.getParam('id');
 		return Companies.findOne({_id : id});
 	},
+	//Function to get all profiles not already assigned for this company
 	getNAUsers : function(){
-		return Profiles.find({})
+		var company_id= FlowRouter.getParam('id');
+		var companyUs = Companies.findOne({_id : company_id}).employees;
+		var temp = [];
+		_.forEach(companyUs, function(comp){temp.push(comp._id)});
+		return Profiles.find({ _id : {$nin: temp} });
 	}
 });
 

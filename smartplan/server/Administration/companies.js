@@ -23,5 +23,5 @@ Meteor.methods({
 			{$pull:{ employees:{_id: profile_id}}},
 			{multi : true}
 		);
-	},
+	}
 })
