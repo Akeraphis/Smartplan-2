@@ -1,7 +1,7 @@
 <template name="Company_Update">
 	<div class="update-company-container">
-		<h3>Company id : {{company._id}}</h3>
 		{{#with getCompany}}
+			<h3>{{name}}</h3>
 			{{> quickForm collection="Companies" doc=this id="updateCompanyForm" type="update"}}
 		{{/with}}
 	</div>

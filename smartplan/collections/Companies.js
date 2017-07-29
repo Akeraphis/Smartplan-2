@@ -9,13 +9,30 @@ Companies.allow({
 	},
 });
 
+Employee = new SimpleSchema({
+	_id : {
+		type : String,
+		label : "Employee ID"
+	},
+	name : {
+		type : String,
+		label : "Employee Name"
+	},
+	role : {
+		type : String,
+		label : "Employee Role"
+	}
+})
+
 CompanySchema = new SimpleSchema({
 	name : {
 		type : String,
+		optional : true,
 		label : 'Company Name',
 	},
 	desc : {
 		type : String,
+		optional : true,
 		 label: 'Description',
 	},
 	createdAt: {
@@ -31,6 +48,7 @@ CompanySchema = new SimpleSchema({
 	author: {
 		type: String,
 		label : "Author",
+		optional: true,
 		autoValue: function(){
 			return this.userId
 		},
@@ -38,6 +56,13 @@ CompanySchema = new SimpleSchema({
 			type : "hidden"
 		},
 	},
+	employees: {
+		type : [Employee],
+		optional: true,
+		autoform : {
+			type : "hidden"
+		}
+	}
 });
 
 Companies.attachSchema( CompanySchema );

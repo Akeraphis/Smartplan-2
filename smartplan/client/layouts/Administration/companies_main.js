@@ -12,5 +12,8 @@ Template.Companies_Main.events({
 	},
 	'click .update-company': function(){
 		FlowRouter.go("/administration/companies/update/"+this._id);
-	}
+	},
+	'click .assign-user-company': function(){
+		FlowRouter.go("/administration/companies/assign-users/"+this._id)
+	},
 });

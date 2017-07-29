@@ -91,4 +91,11 @@ FlowRouter.route('/administration/profiles/update/:id', {
 		BlazeLayout.render('Administration_Main', {main: 'Profile_Update'});
 	}
 });
+
+FlowRouter.route('/administration/companies/assign-users/:id', {
+	name : 'assign_users',
+	action: function(params, queryParams){
+		BlazeLayout.render('Administration_Main', {main: 'Assign_Users'});
+	}
+});
 //--------------------------------------------------------------
