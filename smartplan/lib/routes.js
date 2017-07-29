@@ -78,9 +78,16 @@ FlowRouter.route('/administration/companies/new', {
 	}
 });
 
+FlowRouter.route('/administration/companies/update/:id', {
+	name : 'update_company',
+	action(){
+		BlazeLayout.render('Administration_Main', {main: 'Company_Update'});
+	}
+});
+
 FlowRouter.route('/administration/profiles/update/:id', {
 	name : 'update_profile',
-	action(){
+	action: function(params, queryParams){
 		BlazeLayout.render('Administration_Main', {main: 'Profile_Update'});
 	}
 });

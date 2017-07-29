@@ -5,12 +5,12 @@
 				<h3>{{name}}</h3>
 				<ul>
 					<li>Profile id : {{_id}}</li>
-					<li>User id : {{user._id}}</li>
+					<li>User id : {{user_id}}</li>
 					<li>Company id : {{company.id}}</li>
 					<li>Company Name : {{company.name}}</li>
 					<li>User emails :
 						<ul>
-							{{#each user.emails}}
+							{{#each emails}}
 								<li>{{address}}</li>
 							{{/each}}
 						</ul>

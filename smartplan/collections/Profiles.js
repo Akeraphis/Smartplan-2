@@ -9,16 +9,37 @@ Profiles.allow({
 	},
 });
 
+Email = new SimpleSchema({
+	address : {
+		type : String,
+        regEx: SimpleSchema.RegEx.Email,
+	}
+});
+
+User = new SimpleSchema({
+})
 
 ProfileSchema = new SimpleSchema({
 	name : {
 		type : String,
 		label : 'User Name',
+		optional : true,
 	},
 	role : {
 		type : String,
 		 label: 'Role',
+		 optional: true,
 	},
+	emails: {
+		type: [Email],
+		optional: true,
+	},
+	user_id : {
+		type: String,
+		autoform:{
+			type: "hidden",
+		}
+	}
 });
 
 Profiles.attachSchema( ProfileSchema );
