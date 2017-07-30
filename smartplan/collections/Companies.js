@@ -8,7 +8,7 @@ Companies.allow({
 		return !!userId;
 	},
 });
-
+/*
 Employee = new SimpleSchema({
 	_id : {
 		type : String,
@@ -70,3 +70,4 @@ CompanySchema = new SimpleSchema({
 });
 
 Companies.attachSchema( CompanySchema );
+*/
