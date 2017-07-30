@@ -24,7 +24,6 @@ Meteor.methods({
 			} 
 		});
 	},
-
 	Remove_User_Company: function(profile_id, company_id){
 		var profile = Profiles.findOne({_id : profile_id});
 		Companies.update({
@@ -33,5 +32,14 @@ Meteor.methods({
 			{$pull:{ employees:{_id: profile_id}}},
 			{multi : true}
 		);
+	},
+	getCompanyIds : function(){
+		var comp = Companies.findOne({ employees : {$elemMatch : {userId : "BTh98d4T3saTZDZj4" }}});
+		/*var compIds=[];
+		_.forEach(comp, function(c){
+			compIds.push(c._id);
+		})
+		console.log(compIds);*/
+		return comp;
 	}
 })

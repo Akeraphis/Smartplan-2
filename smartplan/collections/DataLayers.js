@@ -26,7 +26,7 @@ DataTable = new SimpleSchema({
 			type : "hidden"
 		}
 	}
-});*/
+});
 
 DataLayerSchema = new SimpleSchema({
 	name: {
@@ -67,4 +67,4 @@ DataLayerSchema = new SimpleSchema({
 });
 
 
-DataLayers.attachSchema( DataLayerSchema );
+DataLayers.attachSchema( DataLayerSchema );*/
