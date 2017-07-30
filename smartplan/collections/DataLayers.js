@@ -6,7 +6,7 @@ DataLayers.allow({
 	}
 });
 
-
+/*
 DataTable = new SimpleSchema({
 	name : {
 		type : String,
@@ -26,7 +26,7 @@ DataTable = new SimpleSchema({
 			type : "hidden"
 		}
 	}
-});
+});*/
 
 DataLayerSchema = new SimpleSchema({
 	name: {
@@ -53,10 +53,17 @@ DataLayerSchema = new SimpleSchema({
 			type : "hidden"
 		}
 	},
-	dataTables : {
-		type : [DataTable]
+	company_id: {
+		type: String,
+		label : "Company_ID",
+		autoform: {
+			options: function () {
+				return Companies.find({}).map(function (c) {
+					return {label: c.name, value: c._id};
+				});
+			}
+		}
 	}
-
 });
 
 

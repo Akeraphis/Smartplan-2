@@ -36,6 +36,13 @@ FlowRouter.route('/dataLayer', {
 	}
 });
 
+FlowRouter.route('/dataLayer/detail/:id', {
+	name : 'dataLayer_detail',
+	action() {
+		BlazeLayout.render('MainLayout', {main: 'DataLayer_Detail'});
+	}
+});
+
 FlowRouter.route('/applications', {
 	name : 'applications',
 	action(){
