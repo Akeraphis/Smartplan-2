@@ -1,6 +1,7 @@
 Meteor.methods({
 	deleteCompany: function(id){
 		console.log("------- Deleting Company :", id, ' -------');
+		Profiles.update({}, {$pull : {companies : {_id : id}}});
 		Companies.remove({_id : id});
 	},
 
@@ -11,7 +12,7 @@ Meteor.methods({
 	},
 
 	updateCompany: function(id, name, desc){
-		var newComp = Companies.update({_id : id}, {name: name, desc: desc});
+		var newComp = Companies.update({_id : id}, {$set : {name: name, desc: desc}});
 	},
 
 	Add_User_Company: function(profile_id, company_id){
@@ -23,6 +24,7 @@ Meteor.methods({
 				return "Update Successful";
 			} 
 		});
+		Profiles.update({_id : profile._id}, {$push : {companies : {_id : company_id}}});
 	},
 	Remove_User_Company: function(profile_id, company_id){
 		var profile = Profiles.findOne({_id : profile_id});
@@ -32,14 +34,6 @@ Meteor.methods({
 			{$pull:{ employees:{_id: profile_id}}},
 			{multi : true}
 		);
-	},
-	getCompanyIds : function(){
-		var comp = Companies.findOne({ employees : {$elemMatch : {userId : "BTh98d4T3saTZDZj4" }}});
-		/*var compIds=[];
-		_.forEach(comp, function(c){
-			compIds.push(c._id);
-		})
-		console.log(compIds);*/
-		return comp;
+		Profiles.update({_id : profile._id}, {$pull : {companies : {_id : company_id}}});
 	}
 })

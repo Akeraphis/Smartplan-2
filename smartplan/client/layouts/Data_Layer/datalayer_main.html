@@ -4,7 +4,7 @@
 			{{#each dataLayer}}
 				{{> DataLayer}}
 			{{else}}
-				<p>Loading</p>
+				<p>No Data Layer Available</p>
 			{{/each}}
 		{{/if}}
 	</section>
@@ -19,6 +19,6 @@
 				<span class="ingredient">{{name}}</span>
 			{{/each}}
 		</p>
-		<a href="/dataLayer/detail/{{_id}}">Details</a>
+		<a href="/dataLayer/detail/{{_id}}"><i class="fa fa-plus-circle"></i> New table</a>
 	</article>
 </template>

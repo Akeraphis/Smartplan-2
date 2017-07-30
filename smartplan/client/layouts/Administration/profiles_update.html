@@ -1,8 +1,11 @@
 <template name="Profile_Update">
 	<div class="update-profile-container">
-		<h3>Profile id : {{profile._id}}</h3>
 		{{#with getProfile}}
-			{{> quickForm collection="Profiles" doc=this id="updateProfileForm" type="update"}}
+			<h3>Profile id : {{profile._id}}</h3>
+			Profile Name : <input type="text" id="name" value="{{name}}">
+			Role : <input type="text" id="role" value="{{role}}">
+			Email : <input type="text" id="email" value="{{email}}">
+			<button type="submit" value="Submit" class="updateProfile">Submit</button>
 		{{/with}}
 	</div>
 </template>

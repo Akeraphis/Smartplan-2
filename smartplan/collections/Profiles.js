@@ -9,6 +9,7 @@ Profiles.allow({
 	},
 });
 
+/*
 Email = new SimpleSchema({
 	address : {
 		type : String,
@@ -42,4 +43,4 @@ ProfileSchema = new SimpleSchema({
 	}
 });
 
-Profiles.attachSchema( ProfileSchema );
+Profiles.attachSchema( ProfileSchema );*/
