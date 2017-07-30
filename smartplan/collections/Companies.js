@@ -14,6 +14,10 @@ Employee = new SimpleSchema({
 		type : String,
 		label : "Employee ID"
 	},
+	userId : {
+		type: String,
+		label : "User ID",
+	},
 	name : {
 		type : String,
 		label : "Employee Name"

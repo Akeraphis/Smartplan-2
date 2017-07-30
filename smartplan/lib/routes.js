@@ -36,10 +36,10 @@ FlowRouter.route('/dataLayer', {
 	}
 });
 
-FlowRouter.route('/dataLayer/detail/:id', {
-	name : 'dataLayer_detail',
+FlowRouter.route('/dataLayer/newTable/:id', {
+	name : 'dataTable_new',
 	action() {
-		BlazeLayout.render('MainLayout', {main: 'DataLayer_Detail'});
+		BlazeLayout.render('MainLayout', {main: 'DataTable_New'});
 	}
 });
 

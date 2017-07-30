@@ -58,7 +58,7 @@ DataLayerSchema = new SimpleSchema({
 		label : "Company_ID",
 		autoform: {
 			options: function () {
-				return Companies.find({}).map(function (c) {
+				return Companies.find({ employees : {$elemMatch : {userId : "BTh98d4T3saTZDZj4" }}}).map(function (c) { // Replace userId by this.userId to display only the companies of the specific user, howerver this does not work ... To be explored further later
 					return {label: c.name, value: c._id};
 				});
 			}
