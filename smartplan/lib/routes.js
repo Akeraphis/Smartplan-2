@@ -18,7 +18,8 @@ FlowRouter.triggers.enter([function(context, redirect){
 }]);
 //--------------------------------------------------------------
 
-//Routes
+// Routes
+// Main Application
 FlowRouter.route('/', {
 	name : 'home',
 	action() {
@@ -28,7 +29,9 @@ FlowRouter.route('/', {
 		BlazeLayout.render('HomeLayout');
 	}
 });
+//--------------------------------------------------------------
 
+// Routes Data Layer
 FlowRouter.route('/dataLayer', {
 	name : 'dataLayer',
 	action() {
@@ -42,21 +45,27 @@ FlowRouter.route('/dataLayer/newTable/:id', {
 		BlazeLayout.render('MainLayout', {main: 'DataTable_New'});
 	}
 });
+//--------------------------------------------------------------
 
+// Routes Application
 FlowRouter.route('/applications', {
 	name : 'applications',
 	action(){
 		BlazeLayout.render('MainLayout', {main: 'Applications_List'});
 	}
 });
+//--------------------------------------------------------------
 
+// Routes Market
 FlowRouter.route('/market', {
 	name : 'market',
 	action(){
 		BlazeLayout.render('MainLayout', {main: 'Market_Main'});
 	}
 });
+//--------------------------------------------------------------
 
+// Routes Administration
 FlowRouter.route('/administration', {
 	name : 'administration',
 	action(){
