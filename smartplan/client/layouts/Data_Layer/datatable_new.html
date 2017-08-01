@@ -3,10 +3,14 @@
 	<p>
 		<label for="upload">Choose File</label><input type="file" id="uploadFile" name="uploadFile" class="uploadFile"/>
 		<br/>
-		{{#each tables}}
-			<input type="text" name="name" id="{{this}}" value={{this}}>
-			<input type="checkbox" id="{{this}}" name="{{this}}" checked="true">
-		{{/each}}<br/>
-		<button class="import_tables"><i class="fa fa-cloud-download"></i> Import</button><br/>
+		{{#if Template.subscriptionsReady}}
+			{{#each tables}}
+				<input type="text" name="name" id="{{this}}" value={{this}}>
+				<input type="checkbox" id="{{this}}" name="{{this}}" checked="true">
+			{{/each}}<br/>
+			<button class="import_tables"><i class="fa fa-cloud-download"></i> Import</button><br/>
+		{{else}}
+			Loading
+		{{/if}}
 	</p>
 </template>

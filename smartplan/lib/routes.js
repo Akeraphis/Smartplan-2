@@ -45,6 +45,13 @@ FlowRouter.route('/dataLayer/newTable/:id', {
 		BlazeLayout.render('MainLayout', {main: 'DataTable_New'});
 	}
 });
+
+FlowRouter.route('/dataLayer/editTable/:id', {
+	name : 'editTable',
+	action(){
+		BlazeLayout.render('MainLayout', {main: 'DataTable_Edit'});
+	}
+});
 //--------------------------------------------------------------
 
 // Routes Application

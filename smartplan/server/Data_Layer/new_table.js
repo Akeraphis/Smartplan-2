@@ -32,7 +32,7 @@ Meteor.methods({
     		var dt = DataTables.insert({dataLayer : dl, name : tl, content : contents[i]});
     		DataLayers.update({_id : dl}, {$push : {dataTables : {name : tl, dt_id : dt}}});
     		i++;
-    	})
+    	});
 
     }
 });

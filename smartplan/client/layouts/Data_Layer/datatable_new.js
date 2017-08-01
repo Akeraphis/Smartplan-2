@@ -18,7 +18,15 @@ Template.DataTable_New.events({
 	'click .import_tables' : function(){
 		console.log("---- Importing tables into dataLayer ----");
 		var dlId = FlowRouter.getParam('id');
-		Meteor.call('importTables', dlId, Session.get("tables_titles"), Session.get("tables_content"));
+		Meteor.call('importTables', dlId, Session.get("tables_titles"), Session.get("tables_content"), function(err, res){
+			if(!err){
+				Session.set("tables_titles", []);
+				FlowRouter.go('/dataLayer');
+			}
+			else{
+				console.log(err);
+			}
+		});
 	}
 });
 
