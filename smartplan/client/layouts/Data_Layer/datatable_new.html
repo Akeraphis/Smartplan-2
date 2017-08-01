@@ -1,8 +1,12 @@
 <template name="DataTable_New">
-	<h2>Import a new data table</h2>
+	<h2>Import new data tables</h2>
 	<p>
-		Table name : <input type="text" name="name" id="tname">
-		<label for="upload">Process File</label><input type="file" id="uploadFile" name="uploadFile" class="uploadFile"/>
-		<button class="import_file">Import</button>
+		<label for="upload">Choose File</label><input type="file" id="uploadFile" name="uploadFile" class="uploadFile"/>
+		<br/>
+		{{#each tables}}
+			<input type="text" name="name" id="{{this}}" value={{this}}>
+			<input type="checkbox" id="{{this}}" name="{{this}}" checked="true">
+		{{/each}}<br/>
+		<button class="import_tables"><i class="fa fa-cloud-download"></i>Import</button><br/>
 	</p>
 </template>
