@@ -1,0 +1,1 @@
+DataTables = new Mongo.Collection("dataTables");

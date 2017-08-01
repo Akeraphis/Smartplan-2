@@ -1,4 +1,5 @@
 Meteor.subscribe("dataLayers");
+Meteor.subscribe("dataTables");
 
 Template.DataLayer_Main.helpers({
 	'dataLayer': function(){

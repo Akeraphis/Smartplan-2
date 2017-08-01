@@ -1,4 +1,4 @@
-Session.set("tables", []);
+Session.set("tables_titles", []);
 
 Template.DataTable_New.events({
 	'change .uploadFile': function(event, template){
@@ -8,19 +8,22 @@ Template.DataTable_New.events({
 			reader.onload = function(fileLoadEvent) {
 				Meteor.call('importFile', event.target.value, reader.result, function(error,result){
 					console.log(result);
-					Session.set("tables", result[0]);
+					Session.set("tables_titles", result[0]);
+					Session.set("tables_content", result[1]);
 				});
 			};
 			reader.readAsBinaryString(file);
 		});
 	},
 	'click .import_tables' : function(){
-		console.log("test");
+		console.log("---- Importing tables into dataLayer ----");
+		var dlId = FlowRouter.getParam('id');
+		Meteor.call('importTables', dlId, Session.get("tables_titles"), Session.get("tables_content"));
 	}
 });
 
 Template.DataTable_New.helpers({
 	tables : function(){
-		return Session.get("tables");
+		return Session.get("tables_titles");
 	},
 });

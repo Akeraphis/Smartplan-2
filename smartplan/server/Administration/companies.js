@@ -11,7 +11,7 @@ Meteor.methods({
 	createCompany: function(name, desc){
 		var cAt = new Date();
 		var newComp = Companies.insert({name: name, desc: desc, createdAt: cAt, author : this.userId, employees : [] })
-		var newDataLayer = DataLayers.insert({name : "Data Layer "+name, company_id: newComp, createdAt: cAt, author: this.userId});
+		var newDataLayer = DataLayers.insert({name : "Data Layer "+name, company_id: newComp, createdAt: cAt, author: this.userId, dataTables : []});
 	},
 
 	// Update attribtues of a specified company

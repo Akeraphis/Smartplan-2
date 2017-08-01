@@ -1,5 +1,5 @@
 <template name="DataTable_New">
-	<h2>Import new data tables</h2>
+	<h2>Import new tables in data layer</h2>
 	<p>
 		<label for="upload">Choose File</label><input type="file" id="uploadFile" name="uploadFile" class="uploadFile"/>
 		<br/>
@@ -7,6 +7,6 @@
 			<input type="text" name="name" id="{{this}}" value={{this}}>
 			<input type="checkbox" id="{{this}}" name="{{this}}" checked="true">
 		{{/each}}<br/>
-		<button class="import_tables"><i class="fa fa-cloud-download"></i>Import</button><br/>
+		<button class="import_tables"><i class="fa fa-cloud-download"></i> Import</button><br/>
 	</p>
 </template>
