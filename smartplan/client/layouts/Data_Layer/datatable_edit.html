@@ -1,6 +1,6 @@
 <template name="DataTable_Edit">
 	{{#with getDt}}
-		{{name}}<br/>
-		{{content}}
+		<h2>{{name}}</h2>
+		{{> reactiveTable class="table table-bordered table-hover" collection=content showNavigation='auto' rowsPerPage=50}}
 	{{/with}}
 </template>

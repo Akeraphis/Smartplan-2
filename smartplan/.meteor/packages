@@ -31,3 +31,5 @@ check
 netanelgilad:excel
 cfs:standard-packages
 session
+aslagle:reactive-table
+twbs:bootstrap
