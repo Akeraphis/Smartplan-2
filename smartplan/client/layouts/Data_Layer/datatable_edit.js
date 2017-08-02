@@ -13,20 +13,32 @@ Template.DataTable_Edit.helpers({
 });
 
 Template.DataTable_Edit.events({
+	//Double click in a cell to edit element
 	'dblclick .reactive-table tbody tr': function (event) {
-		// set the blog post we'll display details and news for
+
 		var text = event.target.innerHTML;
 		var input = document.createElement("input");
+		
+		//Remove the _id out of the json object
+		var myObj = this;
+		delete myObj._id;
+
+		//Set json in Session to catch after edit
+		Session.set("editCell", myObj);
 		input.className = "updateCell";
 		input.type = "text";
 		input.value = text;
 		event.target.innerHTML="";
-		event.target.parentNode.replaceChild(input, event.target);
+		event.target.appendChild(input, event.target);
 		input.focus();
 	},
+	// When Loosing Focus, save value to the collection
 	'focusout .updateCell': function(event){
+		var tab_id = FlowRouter.getParam('id');
 		var temp = event.target.value;
-		//event.target.parentNode.innerHTML=temp;
-		console.log(event.target.parentNode, this);
+		event.target.outerHTML=temp;
+		
+		//Call method to update collection
+		Meteor.call("updateDataTable", tab_id, temp, this.label, Session.get("editCell"));
 	},
 });
