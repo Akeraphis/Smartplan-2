@@ -15,23 +15,18 @@ Template.DataTable_Edit.helpers({
 Template.DataTable_Edit.events({
 	'dblclick .reactive-table tbody tr': function (event) {
 		// set the blog post we'll display details and news for
-		var temp = event.target.innerHTML;
-		var text = temp.replace(/\s/g, '&nbsp;');
-		event.target.innerHTML = '<input type ="text" class="updateCell" value='+text+'>';
-		event.target.focus();
+		var text = event.target.innerHTML;
+		var input = document.createElement("input");
+		input.className = "updateCell";
+		input.type = "text";
+		input.value = text;
+		event.target.innerHTML="";
+		event.target.parentNode.replaceChild(input, event.target);
+		input.focus();
 	},
 	'focusout .updateCell': function(event){
 		var temp = event.target.value;
-		var html = event.target.outerHTML;
-		event.target.outerHTML = temp;
-		console.log(temp, html, event, this);
+		//event.target.parentNode.innerHTML=temp;
+		console.log(event.target.parentNode, this);
 	},
-	'keypress input.updateCell': function(event){
-		if(event.which==13){
-			var temp = event.target.value;
-			var html = event.target.outerHTML;
-			event.target.outerHTML = temp;
-			console.log(temp, html, event, this);
-		}
-	}
 });
