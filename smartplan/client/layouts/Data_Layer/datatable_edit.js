@@ -13,12 +13,25 @@ Template.DataTable_Edit.helpers({
 });
 
 Template.DataTable_Edit.events({
-	'click .reactive-table tbody tr': function (event) {
+	'dblclick .reactive-table tbody tr': function (event) {
 		// set the blog post we'll display details and news for
-		var post = this;
-		Session.set('post', post);
-		console.log(this, event.target);
 		var temp = event.target.innerHTML;
-		event.target.innerHTML = '<input type ="text" value='+temp+'>'
+		var text = temp.replace(/\s/g, '&nbsp;');
+		event.target.innerHTML = '<input type ="text" class="updateCell" value='+text+'>';
+		event.target.focus();
 	},
+	'focusout .updateCell': function(event){
+		var temp = event.target.value;
+		var html = event.target.outerHTML;
+		event.target.outerHTML = temp;
+		console.log(temp, html, event, this);
+	},
+	'keypress input.updateCell': function(event){
+		if(event.which==13){
+			var temp = event.target.value;
+			var html = event.target.outerHTML;
+			event.target.outerHTML = temp;
+			console.log(temp, html, event, this);
+		}
+	}
 });
