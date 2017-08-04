@@ -12,4 +12,8 @@ Meteor.publish('profiles', function(){
 
 Meteor.publish('dataTables', function(){
 	return DataTables.find({});
+});
+
+Meteor.publish('applications', function(){
+	return Applications.find({});
 })

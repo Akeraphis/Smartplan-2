@@ -61,6 +61,20 @@ FlowRouter.route('/applications', {
 		BlazeLayout.render('MainLayout', {main: 'Applications_List'});
 	}
 });
+
+FlowRouter.route('/applications/new_step1', {
+	name : 'applications_new_step1',
+	action(){
+		BlazeLayout.render('MainLayout', {main: 'Applications_New_Step1'});
+	}
+});
+
+FlowRouter.route('/applications/new_step_2/:id', {
+	name : 'applications_new_step2',
+	action(){
+		BlazeLayout.render('MainLayout', {main: 'Applications_New_Step2'});
+	}
+});
 //--------------------------------------------------------------
 
 // Routes Market

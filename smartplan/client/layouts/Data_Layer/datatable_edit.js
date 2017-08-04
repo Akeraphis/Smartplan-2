@@ -37,8 +37,18 @@ Template.DataTable_Edit.events({
 		var tab_id = FlowRouter.getParam('id');
 		var temp = event.target.value;
 		event.target.outerHTML=temp;
-		
+
 		//Call method to update collection
 		Meteor.call("updateDataTable", tab_id, temp, this.label, Session.get("editCell"));
+	},
+	'keypress .updateCell': function(event){
+		if (event.keyCode==13) {
+			var tab_id = FlowRouter.getParam('id');
+			var temp = event.target.value;
+			event.target.outerHTML=temp;
+			
+			//Call method to update collection
+			Meteor.call("updateDataTable", tab_id, temp, this.label, Session.get("editCell"));
+		}
 	},
 });
