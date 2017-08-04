@@ -1,0 +1,8 @@
+<template name="Applications_List">
+	<h1>My Applications :</h1>
+	<a href="/applications/new_step1"><i class="fa fa-plus-circle"></i> New Application</a>	<br/>
+	<h3>My Apps :</h3>
+	{{#each getApp}}
+		{{name}}
+	{{/each}}
+</template>

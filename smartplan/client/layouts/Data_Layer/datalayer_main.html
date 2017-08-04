@@ -1,3 +1,26 @@
 <template name="DataLayer_Main">
-	Data Layer
+	<section class="recipes">
+		{{#if Template.subscriptionsReady}}
+			{{#each dataLayer}}
+				{{> DataLayer}}
+			{{else}}
+				<p>No Data Layer Available</p>
+			{{/each}}
+		{{/if}}
+	</section>
+	<br/>
+</template>
+
+<template name="DataLayer">
+	<article class="recipe">
+		<h3>{{name}}</h3>
+		<p>
+		<ul>
+			{{#each dataTables}}
+				<li><a href="/dataLayer/editTable/{{dt_id}}"><i class="fa fa-list"></i> <span class="ingredient">{{name}}</span></a></li>
+			{{/each}}
+		</ul>
+		</p>
+		<a href="/dataLayer/newTable/{{_id}}"><i class="fa fa-plus-circle"></i> New table</a>
+	</article>
 </template>

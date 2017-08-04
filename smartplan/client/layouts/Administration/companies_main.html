@@ -1,0 +1,19 @@
+<template name="Companies_Main">
+	<h4><a href="/administration/companies/new"><i class="fa fa-plus-circle"></i> New Company</a></h4>
+	<section class="recipes">
+		{{#each companies}}
+			<article class = "recipe">
+				<h3>{{name}}</h3>
+				{{desc}}
+				<ul>
+					{{#each employees}}
+						<li>{{name}} - {{role}}</li>
+					{{/each}}
+				</ul>
+				<button class="btn-info update-company"><i class="fa fa-building"></i> Update Company</button>
+				<button class="btn-info assign-user-company"><i class="fa fa-user-plus"></i> Assign Employees</button>
+				<button class="btn-danger delete-company"><i class="fa fa-trash-o"></i> Delete Company</button>
+			</article>
+		{{/each}}
+	</section>
+</template>

@@ -1,0 +1,22 @@
+<template name="Assign_Users">
+	<div class="assign-users-container">
+		{{#with getCompany}}
+			<h3>{{name}}</h3>
+			Assigned Users :
+			<ul>
+				{{#each employees}}
+					<li>{{name}} - {{role}} <button class="btn-info remove-user-company"><i class="fa fa-user-times"></i></button></li><br/>
+				{{/each}}
+			</ul>
+		{{/with}}
+
+		<br/>Not assigned Users :
+		<ul>
+			{{#each getNAUsers}}
+				<li>{{name}} - {{role}} <button class="btn-info add-user-company"><i class="fa fa-user-plus"></i></button></li><br/>
+			{{else}}
+				<li>All users have been assigned to this company</li>
+			{{/each}}
+		</ul>
+	</div>
+</template>

@@ -1,0 +1,6 @@
+<template name="DataTable_Edit">
+	{{#with getDt}}
+		<h2>{{name}}</h2>
+		{{> reactiveTable collection=content class= "table table-bordered table-hover" settings=settings}}
+	{{/with}}
+</template>

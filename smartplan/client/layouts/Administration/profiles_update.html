@@ -1,0 +1,11 @@
+<template name="Profile_Update">
+	<div class="update-profile-container">
+		{{#with getProfile}}
+			<h3>Profile id : {{profile._id}}</h3>
+			Profile Name : <input type="text" id="name" value="{{name}}">
+			Role : <input type="text" id="role" value="{{role}}">
+			Email : <input type="text" id="email" value="{{email}}">
+			<button type="submit" value="Submit" class="updateProfile">Submit</button>
+		{{/with}}
+	</div>
+</template>

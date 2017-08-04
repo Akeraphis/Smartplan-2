@@ -1,0 +1,9 @@
+<template name="Company_Update">
+	<div class="update-company-container">
+		{{#with getCompany}}
+			Company Name : <input type="text" id="name" value="{{name}}">
+			Description : <input type="text" id="desc" value="{{desc}}">
+			<button type="submit" value="Submit" class="updateCompany">Submit</button>
+		{{/with}}
+	</div>
+</template>
