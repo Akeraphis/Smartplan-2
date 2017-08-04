@@ -16,4 +16,8 @@ Meteor.publish('dataTables', function(){
 
 Meteor.publish('applications', function(){
 	return Applications.find({});
-})
+});
+
+Meteor.publish('attributes', function(){
+	return Attributes.find({});
+});
