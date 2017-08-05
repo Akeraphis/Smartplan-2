@@ -75,6 +75,14 @@ FlowRouter.route('/applications/new_step_2/:id', {
 		BlazeLayout.render('MainLayout', {main: 'Applications_New_Step2'});
 	}
 });
+
+
+FlowRouter.route('/applications/new_step_2/:id/:attid', {
+	name : 'applications_new_step2_av',
+	action(){
+		BlazeLayout.render('MainLayout', {main: 'Applications_New_Step2'});
+	}
+});
 //--------------------------------------------------------------
 
 // Routes Market

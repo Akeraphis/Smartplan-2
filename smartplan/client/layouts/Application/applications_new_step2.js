@@ -14,6 +14,15 @@ Template.Applications_New_Step2.helpers({
 	},
 	'getAtt' : function(id){
 		return Attributes.findOne({_id : id});
+	},
+	'hasAttId' : function(){
+		var att_id = FlowRouter.getParam('attid');
+		if(att_id != this._id){
+			return false;
+		}
+		else{
+			return true;
+		}
 	}
 });
 
@@ -22,30 +31,36 @@ Template.Applications_New_Step2.events({
 		var app_id = FlowRouter.getParam('id');
 
 		//Retrieve attribute characteristics
-		var name=document.getElementById('attribute-name').value;
+		var name = document.getElementById('attribute-name').value;
 		var type = document.getElementById('atribute-type').value;
 		var desc = document.getElementById('atribute-text').value;
 
 		//Create Attribute
-		Meteor.call("create_attribute", app_id, name, type, desc);
-
-		//Hide modal after attribute creation
-		$('#myModal').modal('hide');
-		$('#myModal').on('hidden.bs.modal', function (e) {
-			$(this)
-				.find("input,textarea")
-				.val('')
-				.end()
-				.find("input[type=checkbox], input[type=radio]")
-				.prop("checked", "")
-				.end();
-		});
-	},
-	'click .list-group-item':function(e){
-		Meteor.call("getAttribute", this._id, function(err, res){
+		Meteor.call("create_attribute", app_id, name, type, desc, function(err, res){
 			if(!err){
-				return res
+				//Hide modal after attribute creation
+				$('#myModal').modal('hide');
+				$('#myModal').on('hidden.bs.modal', function (e) {
+					$(this)
+						.find("input,textarea")
+						.val('')
+						.end()
+						.find("input[type=checkbox], input[type=radio]")
+						.prop("checked", "")
+						.end();
+				});
+
+				FlowRouter.go('/applications/new_step_2/'+app_id+'/'+res)
+			}
+			else{
+				console.log(err);
 			}
 		});
+	},
+	'click .panel-heading':function(e){
+		FlowRouter.go('/applications/new_step_2/'+this.application+'/'+this._id)
+	},
+	'click #att-delete': function(e){
+		Meteor.call("delete_Att", this._id);
 	}
 });

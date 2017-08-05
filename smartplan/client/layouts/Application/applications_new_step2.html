@@ -5,13 +5,17 @@
 			<div class="list-group">
 					{{#each attributes}}
 						{{#with getAtt _id}}
-							<button type="button" class="list-group-item" id="{{name}}">{{name}} - {{type}}</button>
+							<div class="panel panel-default">
+								<div class='panel-heading'>
+									<h4>{{name}} - {{type}}</h4>
+								</div>
+								{{#if hasAttId}}
+									<div class="panel body">
+										{{>attribute_values}}
+									</div>
+								{{/if}}
+							</div>
 						{{/with}}
-						{{#if isSelected}}
-							{{#with selectedAtt}}
-								{{>attribute_values}}
-							{{/with}}
-						{{/if}}
 					{{/each}}
 			</div>
 		</div>
@@ -61,6 +65,9 @@
 </template>
 
 <template name="attribute_values">
-	{{name}}
-	<button type="button" class="btn btn-secondary btn-lg" data-toggle="modal2" data-target="#myModal2"><i class="fa fa-plus"></i> New Value</button>
+	{{#each values}}
+		{{name}}
+	{{/each}}
+	<button type="button" data-toggle="modal2" data-target="#myModal2" title="Create a new value"><i class="fa fa-plus"></i></button>
+	<button id="att-delete" title="Delete attribute"><i class="fa fa-trash-o"></i></button>
 </template>
