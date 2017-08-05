@@ -1,5 +1,11 @@
-Session.set('app', {});
-Meteor.subscribe("attributes");
+Template.Applications_New_Step2.onCreated(function(){
+	var self = this;
+	self.autorun(function(){
+		var app_id = FlowRouter.getParam('id');
+		self.subscribe("attributes_for_app", app_id);
+	})
+})
+
 
 Template.Applications_New_Step2.helpers({
 	'application' : function(){

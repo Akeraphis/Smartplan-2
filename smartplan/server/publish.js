@@ -18,6 +18,6 @@ Meteor.publish('applications', function(){
 	return Applications.find({});
 });
 
-Meteor.publish('attributes', function(){
-	return Attributes.find({});
+Meteor.publish('attributes_for_app', function(app_id){
+	return Attributes.find({application : app_id});
 });
