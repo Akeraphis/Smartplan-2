@@ -2,7 +2,11 @@
 	<div class="col-xs-10">
 		<ul class="list-group">
 			{{#if hasAtt}}
-				<li class="list-group-item">Test</li>
+				{{#with getAtt}}
+					{{#each values}}
+						<li class="list-group-item">{{value}}</li>
+					{{/each}}
+				{{/with}}
 			{{/if}}
 		</ul>
 	</div>

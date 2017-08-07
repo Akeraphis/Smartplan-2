@@ -7,4 +7,8 @@ Template.Attributes_tables.helpers({
 		}
 		return res;
 	},
+	'getAtt': function(){
+		var attid = FlowRouter.getParam('attid');
+		return Attributes.findOne({_id : attid});
+	}
 });
