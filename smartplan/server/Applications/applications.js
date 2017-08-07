@@ -14,5 +14,11 @@ Meteor.methods({
 	'delete_Att' : function(att_id){
 		Attributes.remove({_id : att_id});
 	},
+	'create_value' : function(app_id, att_id, value){
+		Attributes.update({_id : att_id},{$push : {values : {value : value, relations : []}}});
+	},
+	"delete_value": function(att_id, value){
+		Attributes.update({_id : att_id}, {$pull : {values : {value : value}}});
+	}
 });
 

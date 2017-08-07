@@ -62,5 +62,44 @@ Template.Applications_New_Step2.events({
 	},
 	'click #att-delete': function(e){
 		Meteor.call("delete_Att", this._id);
-	}
+	},
+	'click #new-val': function(){
+		var app_id = FlowRouter.getParam('id');
+		var att_id = FlowRouter.getParam('attid');
+		console.log("Creation of a new value for attibute : ", att_id)
+
+		//Retrieve attribute characteristics
+		var value = document.getElementById('value').value;
+
+		//Create Attribute
+		Meteor.call("create_value", app_id, att_id, value, function(err, res){
+			if(!err){
+				//Hide modal after attribute creation
+				$('#myModal2').modal('hide');
+				$('#myModal2').on('hidden.bs.modal', function (e) {
+					$(this)
+						.find("input,textarea")
+						.val('')
+						.end()
+						.find("input[type=checkbox], input[type=radio]")
+						.prop("checked", "")
+						.end();
+				});
+			}
+			else{
+				console.log(err);
+			}
+		});
+	},
+	'click .new_app_go_step3' : function(event){
+		var id = FlowRouter.getParam('id')
+		FlowRouter.go('/applications/new_step_3/'+id);
+	},
 });
+
+Template.attribute_values.events({
+	'click .fa-trash': function(){
+		var att_id = FlowRouter.getParam("attid");
+		Meteor.call("delete_value", att_id, this.value);
+	}
+})

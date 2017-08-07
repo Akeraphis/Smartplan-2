@@ -83,6 +83,27 @@ FlowRouter.route('/applications/new_step_2/:id/:attid', {
 		BlazeLayout.render('MainLayout', {main: 'Applications_New_Step2'});
 	}
 });
+
+FlowRouter.route('/applications/new_step_3/:id', {
+	name : 'applications_new_step3',
+	action(){
+		BlazeLayout.render('MainLayout', {main: 'Applications_New_Step3'});
+	}
+});
+
+FlowRouter.route('/applications/main/:id', {
+	name : 'applications_main',
+	action(){
+		BlazeLayout.render('ApplicationLayout', {main: 'Applications_View'});
+	}
+});
+
+FlowRouter.route('/applications/editor/:id', {
+	name : 'applications_editor',
+	action(){
+		BlazeLayout.render('ApplicationLayout', {main: 'Applications_Editor'});
+	}
+});
 //--------------------------------------------------------------
 
 // Routes Market
