@@ -93,7 +93,7 @@ Template.Applications_New_Step2.events({
 	},
 	'click .new_app_go_step3' : function(event){
 		var id = FlowRouter.getParam('id')
-		FlowRouter.go('/applications/new_step_3/'+id);
+		FlowRouter.go('/applications/editor/'+id);
 	},
 });
 

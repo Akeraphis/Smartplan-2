@@ -91,6 +91,13 @@ FlowRouter.route('/applications/new_step_3/:id', {
 	}
 });
 
+FlowRouter.route('/applications/new_step_3/:id/:attid', {
+	name : 'applications_new_step3_av',
+	action(){
+		BlazeLayout.render('MainLayout', {main: 'Applications_New_Step3'});
+	}
+});
+
 FlowRouter.route('/applications/main/:id', {
 	name : 'applications_main',
 	action(){
@@ -100,6 +107,13 @@ FlowRouter.route('/applications/main/:id', {
 
 FlowRouter.route('/applications/editor/:id', {
 	name : 'applications_editor',
+	action(){
+		BlazeLayout.render('ApplicationLayout', {main: 'Applications_Editor'});
+	}
+});
+
+FlowRouter.route('/applications/editor/:id/:attid', {
+	name : 'applications_editor_av',
 	action(){
 		BlazeLayout.render('ApplicationLayout', {main: 'Applications_Editor'});
 	}

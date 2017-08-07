@@ -1,5 +1,8 @@
 <template name="Applications_Editor">
-	{{#with getApp}}
-		{{>Attributes_list}}
-	{{/with}}
+	<div class="row">
+		{{#with getApp}}
+			{{>Attributes_list}}
+			{{>Attributes_tables}}
+		{{/with}}
+	</div>
 </template>
