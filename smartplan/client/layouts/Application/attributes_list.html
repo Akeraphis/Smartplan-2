@@ -4,13 +4,15 @@
 			{{>newAttribute}}
 			<ul class="list-group">
 				{{#each attributes}}
-					<li class="list-group-item">
-						<p class="text-left">{{getName _id}}</p>
-						<p class="text-right">
-							<button class="edit-attribute" title="Edit Attribute"><i class='fa fa-pencil'></i></button>
-							<button class="delete-attribute"><i class='fa fa-trash' title="Delete Attribute"></i></button>
-						</p>
-					</li>
+					<a href="#details-{{_id}}" class="list-group-item" data-toggle="collapse"><p class="text-left"><i class="glyphicon glyphicon-chevron-right"></i>{{getName _id}}</p></a>
+					<div class="list-group collapse" id="details-{{_id}}">
+						<li class="list-group-item" data-toggle="collapse">
+							<p class="text-right">
+								<button class="edit-attribute" title="Edit Attribute"><i class='fa fa-pencil'></i></button>
+								<button class="delete-attribute"><i class='fa fa-trash' title="Delete Attribute"></i></button>
+							</p>
+						</li>
+					</div>
 					{{> edit_att_modal}}
 				{{/each}}
 			</ul>

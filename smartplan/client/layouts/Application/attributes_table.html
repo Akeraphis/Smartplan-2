@@ -16,19 +16,20 @@
 							</tr>
 						</thead>
 						<tbody>
-							{{#each values}}
+							{{#each getValues _id}}
 								<tr>
 									<td>{{value}}</td>
 									{{#each parentChildren this}}
-										{{#with getAttById this}}
-											<td>
-												<select class="dropdown-content" id="attribute-type">
-													{{#each values}}
-													<option value="{{value}}" selected="selected">{{value}}</option>		
+										<td>
+											<select class="dropdown-content" id="attribute-type-{{this}}-{{getValue}}">
+												<option value="{{getValueAssigned this}}" selected="selected">{{getValueAssigned this}}</option>
+												{{#with getAttById this}}
+													{{#each getValues _id}}
+														<option value="{{value}}">{{value}}</option>
 													{{/each}}
-												</select>
-											</td>
-										{{/with}}
+												{{/with}}
+											</select>
+										</td>
 									{{/each}}
 									<td class="align-right"><i class='fa fa-trash'></i></td></tr>
 							{{/each}}

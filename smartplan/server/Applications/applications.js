@@ -3,7 +3,7 @@ Meteor.methods({
 		return Applications.insert({name : name, desc : desc, author : this.userId, createdAt : new Date(), attributes : []});
 	},
 	'create_attribute' : function(app_id, name, type, desc, parent){
-		var att_id = Attributes.insert({application : app_id, name : name, type : type, desc : desc, parent: parent, children : [], values : []})
+		var att_id = Attributes.insert({application : app_id, name : name, type : type, desc : desc, parent: parent, children : []})
 		if(parent != 'None'){
 			Attributes.update({_id : parent}, {$push : {children : att_id}});
 		}
@@ -33,10 +33,10 @@ Meteor.methods({
 		Attributes.remove({_id : att_id});
 	},
 	'create_value' : function(app_id, att_id, value){
-		Attributes.update({_id : att_id},{$push : {values : {value : value, relations : []}}});
+		Values.insert({application : app_id, attribute : att_id, value : value});
 	},
-	"delete_value": function(att_id, value){
-		Attributes.update({_id : att_id}, {$pull : {values : {value : value}}});
+	"delete_value": function(val_id){
+		Values.remove({_id : val_id});
 	}
 });
 
