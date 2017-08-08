@@ -10,6 +10,18 @@ Template.Attributes_tables.helpers({
 	'getAtt': function(){
 		var attid = FlowRouter.getParam('attid');
 		return Attributes.findOne({_id : attid});
+	},
+	'getName' : function(att_id){
+		var att= Attributes.findOne({_id : att_id});
+		if (att){
+			return att.name;
+		}
+	},
+	'parentChildren': function(val, parentContext){
+		return Template.parentData(1).children
+	},
+	'getAttById': function(id){
+		return Attributes.findOne({_id : id});
 	}
 });
 

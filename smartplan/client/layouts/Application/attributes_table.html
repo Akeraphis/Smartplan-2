@@ -7,11 +7,30 @@
 					{{#with getAtt}}
 					<table class="table table-striped">
 						<thead>
-							<tr><th>{{name}}</th><th class="align-right">Delete</th></tr>
+							<tr>
+								<th>{{name}}</th>
+									{{#each children}}
+										<th>{{getName this}}</th>
+									{{/each}}
+								<th class="align-right">Delete</th>
+							</tr>
 						</thead>
 						<tbody>
 							{{#each values}}
-								<tr><td>{{value}}</td><td class="align-right"><i class='fa fa-trash'></i></td></tr>
+								<tr>
+									<td>{{value}}</td>
+									{{#each parentChildren this}}
+										{{#with getAttById this}}
+											<td>
+												<select class="dropdown-content" id="attribute-type">
+													{{#each values}}
+													<option value="{{value}}" selected="selected">{{value}}</option>		
+													{{/each}}
+												</select>
+											</td>
+										{{/with}}
+									{{/each}}
+									<td class="align-right"><i class='fa fa-trash'></i></td></tr>
 							{{/each}}
 						</tbody>
 					</table>
