@@ -11,7 +11,7 @@
 							<button class="delete-attribute"><i class='fa fa-trash' title="Delete Attribute"></i></button>
 						</p>
 					</li>
-					{{> edit_att_modal}}
+					{{> edit_att_modal _id}}
 				{{/each}}
 			</ul>
 		</ol>
@@ -36,16 +36,25 @@
 				<div class="modal-body">
 					<form>
 						<div class="form-group">
+							<label for="message-text" class="control-label">Parent:</label>
+							<select class="dropdown-content" id="attribute-parent">
+								<option value="None" selected="selected"><b>None</b></option>
+								{{#each getAtt}}
+									<option value="{{_id}}">{{name}}</option>
+								{{/each}}
+							</select>
+						</div>
+						<div class="form-group">
 							<label for="recipient-name" class="control-label">Name:</label>
 							<input type="text" class="form-control" id="attribute-name">
 						</div>
 						<div class="form-group">
 							<label for="message-text" class="control-label">Description:</label>
-							<textarea class="form-control" id="atribute-text"></textarea>
+							<textarea class="form-control" id="attribute-text"></textarea>
 						</div>
 						<div class="form-group">
 							<label for="message-text" class="control-label">Type:</label>
-							<select class="dropdown-content" id="atribute-type">
+							<select class="dropdown-content" id="attribute-type">
 								<option value="String" selected="selected">String</option>
 								<option value="Real">Real</option>
 								<option value="Date">Date</option>
@@ -74,16 +83,25 @@
 				<div class="modal-body">
 					<form>
 						<div class="form-group">
+							<label for="message-text" class="control-label">Parent:</label>
+							<select class="dropdown-content" id="attribute-parent-3">
+								<option value="None" selected="selected"><b>None</b></option>
+								{{#each getAtt}}
+									<option value="{{_id}}">{{name}}</option>
+								{{/each}}
+							</select>
+						</div>
+						<div class="form-group">
 							<label for="recipient-name" class="control-label">Name:</label>
 							<input type="text" class="form-control" id="attribute-name-3">
 						</div>
 						<div class="form-group">
 							<label for="message-text" class="control-label">Description:</label>
-							<textarea class="form-control" id="atribute-text-3"></textarea>
+							<textarea class="form-control" id="attribute-text-3"></textarea>
 						</div>
 						<div class="form-group">
 							<label for="message-text" class="control-label">Type:</label>
-							<select class="dropdown-content" id="atribute-type-3">
+							<select class="dropdown-content" id="attribute-type-3">
 								<option value="String" selected="selected">String</option>
 								<option value="Real">Real</option>
 								<option value="Date">Date</option>

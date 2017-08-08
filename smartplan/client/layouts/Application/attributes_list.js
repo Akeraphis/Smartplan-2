@@ -20,19 +20,22 @@ Template.Attributes_list.events({
 		$('#myModal3').modal('show');
 		var att = Attributes.findOne({_id : this._id});
 		document.getElementById('attribute-name-3').value = att.name;
-		document.getElementById('atribute-type-3').value = att.type;
-		document.getElementById('atribute-text-3').value = att.desc;
+		document.getElementById('attribute-type-3').value = att.type;
+		document.getElementById('attribute-text-3').value = att.desc;
+		document.getElementById('attribute-parent-3').value = att.parent;
 	},
 	'click #edit-att': function(e){
 
 		//Retrieve attribute characteristics
 		var name = document.getElementById('attribute-name-3').value;
-		var type = document.getElementById('atribute-type-3').value;
-		var desc = document.getElementById('atribute-text-3').value;
+		var type = document.getElementById('attribute-type-3').value;
+		var desc = document.getElementById('attribute-text-3').value;
+		var parent = document.getElementById('attribute-parent-3').value;
+
+		console.log(this._id, name, parent);
 
 		//Create Attribute
-		console.log(e, this)
-		Meteor.call("edit_attribute", this._id, name, type, desc, function(err, res){
+		Meteor.call("edit_attribute", this._id, name, type, desc, parent, function(err, res){
 			if(!err){
 				//Hide modal after attribute creation
 				$('#myModal3').modal('hide');
@@ -59,11 +62,13 @@ Template.newAttribute.events({
 
 		//Retrieve attribute characteristics
 		var name = document.getElementById('attribute-name').value;
-		var type = document.getElementById('atribute-type').value;
-		var desc = document.getElementById('atribute-text').value;
+		var type = document.getElementById('attribute-type').value;
+		var desc = document.getElementById('attribute-text').value;
+		var parent = document.getElementById('attribute-parent').value;
+
 
 		//Create Attribute
-		Meteor.call("create_attribute", app_id, name, type, desc, function(err, res){
+		Meteor.call("create_attribute", app_id, name, type, desc, parent, function(err, res){
 			if(!err){
 				//Hide modal after attribute creation
 				$('#myModal').modal('hide');
@@ -83,3 +88,17 @@ Template.newAttribute.events({
 		});
 	},
 });
+
+Template.new_att_modal.helpers({
+	'getAtt': function(){
+		var app_id = FlowRouter.getParam("id");
+		return 	Attributes.find({application : app_id});
+	}
+});
+
+Template.edit_att_modal.helpers({
+	'getAtt': function(){
+		var app_id = FlowRouter.getParam("id");
+		return 	Attributes.find({application : app_id});
+	}
+})
