@@ -28,7 +28,7 @@ Meteor.methods({
 	'delete_Att' : function(app_id, att_id){
 		Applications.update({_id : app_id}, {$pull : {attributes : {_id : att_id}}});
 		var att = Attributes.findOne({_id : att_id})
-		Attributes.update({_id : att.parent}, {$pull : {children : att_id}});
+		Attributes.update({_id : att}, {$pull : {children : att_id}});
 		Attributes.update({parent : att_id}, {$set : {parent : "None"}});
 		Attributes.remove({_id : att_id});
 	},

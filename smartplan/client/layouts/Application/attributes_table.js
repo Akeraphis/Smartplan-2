@@ -26,9 +26,10 @@ Template.Attributes_tables.helpers({
 });
 
 Template.Attributes_tables.events({
-	'click #att-delete': function(e){
-		Meteor.call("delete_Att", this._id);
-	},
+	'click .fa-trash': function(){
+		var att_id = FlowRouter.getParam("attid");
+		Meteor.call("delete_value", att_id, this.value);
+	}
 })
 
 Template.newValue.events({
