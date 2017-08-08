@@ -17,42 +17,25 @@ Template.Attributes_list.events({
 		Meteor.call("delete_Att", id, this._id);
 	},
 	'click .edit-attribute': function(e){
-		$('#myModal3').modal('show');
+		$('#myModal_'+this._id).modal('show');
 		var att = Attributes.findOne({_id : this._id});
-		document.getElementById('attribute-name-3').value = att.name;
-		document.getElementById('attribute-type-3').value = att.type;
-		document.getElementById('attribute-text-3').value = att.desc;
-		document.getElementById('attribute-parent-3').value = att.parent;
+
+		document.getElementById('attribute-name-'+this._id).value = att.name;
+		document.getElementById('attribute-type-'+this._id).value = att.type;
+		document.getElementById('attribute-text-'+this._id).value = att.desc;
+		document.getElementById('attribute-parent-'+this._id).value = att.parent;
 	},
 	'click #edit-att': function(e){
 
 		//Retrieve attribute characteristics
-		var name = document.getElementById('attribute-name-3').value;
-		var type = document.getElementById('attribute-type-3').value;
-		var desc = document.getElementById('attribute-text-3').value;
-		var parent = document.getElementById('attribute-parent-3').value;
-
-		console.log(this._id, name, parent);
+		var name = document.getElementById('attribute-name-'+this._id).value;
+		var type = document.getElementById('attribute-type-'+this._id).value;
+		var desc = document.getElementById('attribute-text-'+this._id).value;
+		var parent = document.getElementById('attribute-parent-'+this._id).value;
 
 		//Create Attribute
-		Meteor.call("edit_attribute", this._id, name, type, desc, parent, function(err, res){
-			if(!err){
-				//Hide modal after attribute creation
-				$('#myModal3').modal('hide');
-				$('#myModal3').on('hidden.bs.modal', function (e) {
-					$(this)
-						.find("input,textarea")
-						.val('')
-						.end()
-						.find("input[type=checkbox], input[type=radio]")
-						.prop("checked", "")
-						.end();
-				});
-			}
-			else{
-				console.log(err);
-			}
-		});
+		Meteor.call("edit_attribute", this._id, name, type, desc, parent);
+		$('#myModal_'+this._id).modal('hide');
 	},
 });
 

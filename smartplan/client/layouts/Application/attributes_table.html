@@ -1,15 +1,54 @@
 <template name="Attributes_tables">
 	<div class="col-xs-8">
-		<ol class="breadcrumb">
-			<ul class="list-group">
-				{{#if hasAtt}}
+		{{#if hasAtt}}
+			<ol class="breadcrumb">
+				{{> newValue}}
+				<div class="table-responsive">
 					{{#with getAtt}}
-						{{#each values}}
-							<li class="list-group-item">{{value}}</li>
-						{{/each}}
+					<table class="table table-striped">
+						<thead>
+							<tr><th>{{name}}</th><th class="align-right">Delete</th></tr>
+						</thead>
+						<tbody>
+							{{#each values}}
+								<tr><td>{{value}}</td><td class="align-right"><i class='fa fa-trash'></i></td></tr>
+							{{/each}}
+						</tbody>
+					</table>
 					{{/with}}
-				{{/if}}
-			</ul>
-		</ol>
+				</div>
+			</ol>
+		{{/if}}
+	</div>
+</template>
+
+<template name="newValue">
+	<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal2" title="Create New Value"><i class="fa fa-plus"></i></button>
+	<br/><br/>
+	{{> new_value_modal}}
+</template>
+
+<template name="new_value_modal">
+	<div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title" id="myModalLabel">New Value</h4>
+				</div>
+				<div class="modal-body">
+					<form>
+						<div class="form-group">
+							<label for="recipient-name" class="control-label">Value:</label>
+							<input type="text" class="form-control" id="value">
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+					<button type="button" class="btn btn-primary" id="new-val">Create</button>
+				</div>
+			</div>
+		</div>
 	</div>
 </template>

@@ -11,7 +11,7 @@
 							<button class="delete-attribute"><i class='fa fa-trash' title="Delete Attribute"></i></button>
 						</p>
 					</li>
-					{{> edit_att_modal _id}}
+					{{> edit_att_modal}}
 				{{/each}}
 			</ul>
 		</ol>
@@ -73,7 +73,7 @@
 </template>
 
 <template name="edit_att_modal">
-	<div class="modal fade" id="myModal3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal fade" id="myModal_{{_id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -84,7 +84,7 @@
 					<form>
 						<div class="form-group">
 							<label for="message-text" class="control-label">Parent:</label>
-							<select class="dropdown-content" id="attribute-parent-3">
+							<select class="dropdown-content" id="attribute-parent-{{_id}}">
 								<option value="None" selected="selected"><b>None</b></option>
 								{{#each getAtt}}
 									<option value="{{_id}}">{{name}}</option>
@@ -93,15 +93,15 @@
 						</div>
 						<div class="form-group">
 							<label for="recipient-name" class="control-label">Name:</label>
-							<input type="text" class="form-control" id="attribute-name-3">
+							<input type="text" class="form-control" id="attribute-name-{{_id}}">
 						</div>
 						<div class="form-group">
 							<label for="message-text" class="control-label">Description:</label>
-							<textarea class="form-control" id="attribute-text-3"></textarea>
+							<textarea class="form-control" id="attribute-text-{{_id}}"></textarea>
 						</div>
 						<div class="form-group">
 							<label for="message-text" class="control-label">Type:</label>
-							<select class="dropdown-content" id="attribute-type-3">
+							<select class="dropdown-content" id="attribute-type-{{_id}}">
 								<option value="String" selected="selected">String</option>
 								<option value="Real">Real</option>
 								<option value="Date">Date</option>

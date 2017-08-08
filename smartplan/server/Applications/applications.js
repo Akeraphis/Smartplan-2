@@ -8,7 +8,6 @@ Meteor.methods({
 		return att_id;
 	},
 	'edit_attribute' : function(att_id, name, type, desc, parent){
-		console.log("updating attribute :", att_id, name, type, desc, parent);
 		Attributes.update({_id : att_id}, {$set : {name : name, type : type, desc : desc, parent : parent}});
 	},
 	'deleteApplication' : function(app_id){
