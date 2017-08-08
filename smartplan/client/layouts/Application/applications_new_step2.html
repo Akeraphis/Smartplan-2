@@ -1,69 +1,29 @@
 <template name="Applications_New_Step2">
 	{{#with application}}
-		<h2>{{name}}</h2><br/>
-		<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus"></i> New Atttribute</button>
-		<button type="button" class="btn btn-primary btn-lg"><i class="fa fa-download"></i> Import</button>
-		<br/><br/>
+		{{>newAttribute}}
 		<div class="row">
 			<div class="list-group">
-					{{#each attributes}}
-						{{#with getAtt _id}}
-							<div class="panel panel-default">
-								<div class='panel-heading'>
-									<h4>{{name}} - {{type}}</h4>
-								</div>
-								{{#if hasAttId}}
-									<div class="panel body">
-										{{>attribute_values}}
-									</div>
-								{{/if}}
+				{{#each attributes}}
+					{{#with getAtt _id}}
+						<div class="panel panel-default">
+							<div class='panel-heading'>
+								<h4>{{name}} - {{type}}</h4>
 							</div>
-						{{/with}}
-					{{/each}}
+							{{#if hasAttId}}
+								<div class="panel body">
+									{{>attribute_values}}
+								</div>
+							{{/if}}
+						</div>
+					{{/with}}
+				{{/each}}
 			</div>
 		</div>
 	{{/with}}
-	{{> new_att_modal}}
 	<button class="new_app_go_step3" type="submit">Next</button>
 </template>
 
-<template name="new_att_modal">
-	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-					<h4 class="modal-title" id="myModalLabel">New Attribute</h4>
-				</div>
-				<div class="modal-body">
-					<form>
-						<div class="form-group">
-							<label for="recipient-name" class="control-label">Name:</label>
-							<input type="text" class="form-control" id="attribute-name">
-						</div>
-						<div class="form-group">
-							<label for="message-text" class="control-label">Description:</label>
-							<textarea class="form-control" id="atribute-text"></textarea>
-						</div>
-						<div class="form-group">
-							<label for="message-text" class="control-label">Type:</label>
-							<select class="dropdown-content" id="atribute-type">
-								<option value="String" selected="selected">String</option>
-								<option value="Real">Real</option>
-								<option value="Date">Date</option>
-								<option value="Timeseries">Timeseries</option>
-							</select>
-						</div>
-					</form>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-					<button type="button" class="btn btn-primary" id="new-att">Create</button>
-				</div>
-			</div>
-		</div>
-	</div>
-</template>
+
 
 <template name="attribute_values">
 	<button type="button" data-toggle="modal" data-target="#myModal2" title="Create a new value"><i class="fa fa-plus"></i></button>

@@ -1,9 +1,102 @@
 <template name="Attributes_list">
-	<div class="col-xs-2">
-		<ul class="list-group">
-			{{#each attributes}}
-				<li class="list-group-item">{{getName _id}}</li>
-			{{/each}}
-		</ul>
+	<div class="col-xs-4">
+		<ol class="breadcrumb">
+			{{>newAttribute}}
+			<ul class="list-group">
+				{{#each attributes}}
+					<li class="list-group-item">
+						<p class="text-left">{{getName _id}}</p>
+						<p class="text-right">
+							<button class="edit-attribute" title="Edit Attribute"><i class='fa fa-pencil'></i></button>
+							<button class="delete-attribute"><i class='fa fa-trash' title="Delete Attribute"></i></button>
+						</p>
+					</li>
+					{{> edit_att_modal}}
+				{{/each}}
+			</ul>
+		</ol>
+	</div>
+</template>
+
+<template name="newAttribute">
+	<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal" title="Create New Attribute"><i class="fa fa-plus"></i></button>
+	<button type="button" class="btn btn-primary btn-lg" title="Import attributes from data layer"><i class="fa fa-download"></i></button>
+	<br/><br/>
+	{{> new_att_modal}}
+</template>
+
+<template name="new_att_modal">
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title" id="myModalLabel">New Attribute</h4>
+				</div>
+				<div class="modal-body">
+					<form>
+						<div class="form-group">
+							<label for="recipient-name" class="control-label">Name:</label>
+							<input type="text" class="form-control" id="attribute-name">
+						</div>
+						<div class="form-group">
+							<label for="message-text" class="control-label">Description:</label>
+							<textarea class="form-control" id="atribute-text"></textarea>
+						</div>
+						<div class="form-group">
+							<label for="message-text" class="control-label">Type:</label>
+							<select class="dropdown-content" id="atribute-type">
+								<option value="String" selected="selected">String</option>
+								<option value="Real">Real</option>
+								<option value="Date">Date</option>
+								<option value="Timeseries">Timeseries</option>
+							</select>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+					<button type="button" class="btn btn-primary" id="new-att">Create</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</template>
+
+<template name="edit_att_modal">
+	<div class="modal fade" id="myModal3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title" id="myModalLabel">Edit Attribute</h4>
+				</div>
+				<div class="modal-body">
+					<form>
+						<div class="form-group">
+							<label for="recipient-name" class="control-label">Name:</label>
+							<input type="text" class="form-control" id="attribute-name-3">
+						</div>
+						<div class="form-group">
+							<label for="message-text" class="control-label">Description:</label>
+							<textarea class="form-control" id="atribute-text-3"></textarea>
+						</div>
+						<div class="form-group">
+							<label for="message-text" class="control-label">Type:</label>
+							<select class="dropdown-content" id="atribute-type-3">
+								<option value="String" selected="selected">String</option>
+								<option value="Real">Real</option>
+								<option value="Date">Date</option>
+								<option value="Timeseries">Timeseries</option>
+							</select>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+					<button type="button" class="btn btn-primary" id="edit-att">Update</button>
+				</div>
+			</div>
+		</div>
 	</div>
 </template>

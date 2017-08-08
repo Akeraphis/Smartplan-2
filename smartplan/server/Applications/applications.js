@@ -7,11 +7,16 @@ Meteor.methods({
 		Applications.update({_id : app_id}, {$push : {attributes : {_id : att_id}}});
 		return att_id;
 	},
+	'edit_attribute' : function(att_id, name, type, desc){
+		console.log(att_id, name, type, desc);
+		Attributes.update({_id : att_id}, {$set : {name : name, type : type, desc : desc}});
+	},
 	'deleteApplication' : function(app_id){
 		Attributes.remove({application : app_id});
 		Applications.remove({_id : app_id});
 	},
-	'delete_Att' : function(att_id){
+	'delete_Att' : function(app_id, att_id){
+		Applications.update({_id : app_id}, {$pull : {attributes : {_id : att_id}}});
 		Attributes.remove({_id : att_id});
 	},
 	'create_value' : function(app_id, att_id, value){

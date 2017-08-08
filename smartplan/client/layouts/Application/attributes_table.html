@@ -1,0 +1,15 @@
+<template name="Attributes_tables">
+	<div class="col-xs-8">
+		<ol class="breadcrumb">
+			<ul class="list-group">
+				{{#if hasAtt}}
+					{{#with getAtt}}
+						{{#each values}}
+							<li class="list-group-item">{{value}}</li>
+						{{/each}}
+					{{/with}}
+				{{/if}}
+			</ul>
+		</ol>
+	</div>
+</template>

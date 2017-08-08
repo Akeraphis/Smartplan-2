@@ -1,6 +1,7 @@
 <template name="Applications_Editor">
 	<div class="row">
 		{{#with getApp}}
+			<h2>{{name}}</h2><br/>
 			{{>Attributes_list}}
 			{{>Attributes_tables}}
 		{{/with}}
