@@ -65,7 +65,7 @@ Template.newAttribute.events({
 						.prop("checked", "")
 						.end();
 				});
-				FlowRouter.go("/applications/editor/"+id+'/'+this._id);
+				FlowRouter.go("/applications/editor/"+app_id+'/'+res);
 			}
 			else{
 				console.log(err);

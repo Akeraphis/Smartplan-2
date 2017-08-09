@@ -2,6 +2,7 @@
 	<div class="col-xs-8">
 		{{#if hasAtt}}
 			<ol class="breadcrumb">
+				<h4>Values</h4>
 				{{> newValue}}
 				{{#with getVA}}
 					{{> reactiveTable collection=content class="table table-bordered table-hover" settings=settings}}

@@ -1,7 +1,18 @@
 Meteor.methods({
+	//---------------------------------------------------
+	// Methods on Applications
+	//---------------------------------------------------
 	'create_New_App' : function(name, desc){
 		return Applications.insert({name : name, desc : desc, author : this.userId, createdAt : new Date(), attributes : []});
 	},
+	'deleteApplication' : function(app_id){
+		ValuesAssignments.remove({application : app_id});
+		Attributes.remove({application : app_id});
+		Applications.remove({_id : app_id});
+	},
+	//---------------------------------------------------
+	// Methods on Applications
+	//---------------------------------------------------
 	'create_attribute' : function(app_id, name, type, desc, parent){
 		var att_id = Attributes.insert({application : app_id, name : name, type : type, desc : desc, parent: parent, children : []})
 		if(parent != 'None'){
@@ -16,19 +27,17 @@ Meteor.methods({
 		var previous_parent = Attributes.findOne({_id : att_id}).parent;
 		Attributes.update({_id : att_id}, {$set : {name : name, type : type, desc : desc}});
 	},
-	'deleteApplication' : function(app_id){
-		Attributes.remove({application : app_id});
-		Applications.remove({_id : app_id});
-	},
 	'delete_Att' : function(app_id, att_id){
+		ValuesAssignments.remove({attribute : att_id});
 		Applications.update({_id : app_id}, {$pull : {attributes : {_id : att_id}}});
-		var att = Attributes.findOne({_id : att_id})
 		Attributes.update({_id : att}, {$pull : {children : att_id}});
 		Attributes.update({parent : att_id}, {$set : {parent : "None"}});
 		Attributes.remove({_id : att_id});
 	},
+	//---------------------------------------------------
+	// Methods on Values
+	//---------------------------------------------------
 	'create_value' : function(app_id, att_id, value){
-		Values.insert({application : app_id, attribute : att_id, value : value});
 		var att = Attributes.findOne({_id : att_id});
 		var content = {};
 		_.forEach(att.children, function(c){
@@ -40,7 +49,7 @@ Meteor.methods({
 		ValuesAssignments.update({attribute : att_id},{$push : {content : content}});
 	},
 	"delete_value": function(val_id){
-		Values.remove({_id : val_id});
+		//Values.remove({_id : val_id});
 	},
 	"create_all_values_assignments" : function(parent_id, child_id){
 		var chi = Attributes.findOne({_id : child_id});

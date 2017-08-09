@@ -2,7 +2,6 @@ Template.Attributes_tables.onCreated(function(){
 	var self = this;
 	self.autorun(function(){
 		var id = FlowRouter.getParam('id');
-		self.subscribe("values_for_app", id);
 		self.subscribe("values_assignments_for_app", id);
 	})
 });
@@ -37,6 +36,8 @@ Template.Attributes_tables.events({
 	//Double click in a cell to edit element
 	'dblclick .reactive-table tbody tr': function (event) {
 
+		console.log(this, event.target);
+
 		var text = event.target.innerHTML;
 		var selectList = document.createElement("select");
 		
@@ -49,7 +50,6 @@ Template.Attributes_tables.events({
 		event.target.innerHTML="";
 		selectList.className = "dropdown-content";
 		Session.set("column_name", event.target.className);
-		console.log(event.target.className);
 
 		//Add Option selected to the select
 		Meteor.call('getValues', event.target.className, function(err, res){
@@ -71,19 +71,21 @@ Template.Attributes_tables.events({
 		var temp = event.target.value;
 		event.target.outerHTML=temp;
 
-		console.log(event.target, Session.get("column_name"))
-
-		//Call method to update collection
-		Meteor.call("updateValuesAssignments", att_id, temp, Session.get("column_name"),  Session.get("editCell"));
+		if(Session.get("column_name")!= "dropdown-content"){
+			//Call method to update collection
+			Meteor.call("updateValuesAssignments", att_id, temp, Session.get("column_name"),  Session.get("editCell"));
+		}
 	},
 	'keypress .dropdown-content': function(event){
 		if (event.keyCode==13) {
-			var app_id = FlowRouter.getParam('id');
+			var att_id = FlowRouter.getParam('attid');
 			var temp = event.target.value;
 			event.target.outerHTML=temp;
-			
-			//Call method to update collection
-			//Meteor.call("updateValuesAssignments", app_id, temp, this.label, Session.get("editCell"));
+
+			if(Session.get("column_name")!= "dropdown-content"){
+				//Call method to update collection
+				Meteor.call("updateValuesAssignments", att_id, temp, Session.get("column_name"),  Session.get("editCell"));
+			}
 		}
 	},
 })
