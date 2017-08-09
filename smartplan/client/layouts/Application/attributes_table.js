@@ -36,34 +36,57 @@ Template.Attributes_tables.events({
 	//Double click in a cell to edit element
 	'dblclick .reactive-table tbody tr': function (event) {
 
-		console.log(this, event.target);
+		var att_id = FlowRouter.getParam("attid");
+		var att_name = Attributes.findOne({_id : att_id}).name;
 
-		var text = event.target.innerHTML;
-		var selectList = document.createElement("select");
-		
-		//Remove the _id out of the json object
-		var myObj = this;
-		delete myObj._id;
+		// Have a dropdown if and only if we are not double clicking on a value of the first column
+		if(event.target.className != att_name){
+			var text = event.target.innerHTML;
+			var selectList = document.createElement("select");
+			
+			//Remove the _id out of the json object
+			var myObj = this;
+			delete myObj._id;
 
-		//Set json in Session to catch after edit
-		Session.set("editCell", myObj);
-		event.target.innerHTML="";
-		selectList.className = "dropdown-content";
-		Session.set("column_name", event.target.className);
+			//Set json in Session to catch after edit
+			Session.set("editCell", myObj);
+			event.target.innerHTML="";
+			selectList.className = "dropdown-content";
+			Session.set("column_name", event.target.className);
 
-		//Add Option selected to the select
-		Meteor.call('getValues', event.target.className, function(err, res){
-			if(!err){
-				event.target.appendChild(selectList, event.target);
-				for (var i = 0; i < res.length; i++) {
-					var option = document.createElement("option");
-					option.value = res[i];
-					option.text = res[i];
-					selectList.appendChild(option);
+			//Add Option selected to the select
+			Meteor.call('getValues', event.target.className, function(err, res){
+				if(!err){
+					event.target.appendChild(selectList, event.target);
+					for (var i = 0; i < res.length; i++) {
+						var option = document.createElement("option");
+						option.value = res[i];
+						option.text = res[i];
+						selectList.appendChild(option);
+					}
+					selectList.focus();
 				}
-				selectList.focus();
-			}
-		});		
+			});		
+		}
+		//If clicked on the first colulmn we would like to have a simple input text
+		else{
+			var text = event.target.innerHTML;
+			var input = document.createElement("input");
+			
+			//Remove the _id out of the json object
+			var myObj = this;
+			delete myObj._id;
+
+			//Set json in Session to catch after edit
+			Session.set("editCell", myObj);
+			Session.set("column_name", event.target.className);
+			input.className = "updateCell";
+			input.type = "text";
+			input.value = text;
+			event.target.innerHTML="";
+			event.target.appendChild(input, event.target);
+			input.focus();
+		}		
 	},
 	// When Loosing Focus, save value to the collection
 	'focusout .dropdown-content': function(event){
@@ -76,11 +99,33 @@ Template.Attributes_tables.events({
 			Meteor.call("updateValuesAssignments", att_id, temp, Session.get("column_name"),  Session.get("editCell"));
 		}
 	},
+	'focusout .updateCell': function(event){
+		var att_id = FlowRouter.getParam('attid');
+		var temp = event.target.value;
+		//event.target.outerHTML=temp;
+
+		if(Session.get("column_name")!= "dropdown-content"){
+			//Call method to update collection
+			Meteor.call("updateValuesAssignments", att_id, temp, Session.get("column_name"),  Session.get("editCell"));
+		}
+	},
 	'keypress .dropdown-content': function(event){
 		if (event.keyCode==13) {
 			var att_id = FlowRouter.getParam('attid');
 			var temp = event.target.value;
 			event.target.outerHTML=temp;
+
+			if(Session.get("column_name")!= "dropdown-content"){
+				//Call method to update collection
+				Meteor.call("updateValuesAssignments", att_id, temp, Session.get("column_name"),  Session.get("editCell"));
+			}
+		}
+	},
+	'keypress .updateCell': function(event){
+		if (event.keyCode==13) {
+			var att_id = FlowRouter.getParam('attid');
+			var temp = event.target.value;
+			//event.target.outerHTML=temp;
 
 			if(Session.get("column_name")!= "dropdown-content"){
 				//Call method to update collection
