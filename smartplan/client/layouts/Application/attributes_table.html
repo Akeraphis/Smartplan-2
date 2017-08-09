@@ -3,40 +3,9 @@
 		{{#if hasAtt}}
 			<ol class="breadcrumb">
 				{{> newValue}}
-				<div class="table-responsive">
-					{{#with getAtt}}
-					<table class="table table-striped">
-						<thead>
-							<tr>
-								<th>{{name}}</th>
-									{{#each children}}
-										<th>{{getName this}}</th>
-									{{/each}}
-								<th class="align-right">Delete</th>
-							</tr>
-						</thead>
-						<tbody>
-							{{#each getValues _id}}
-								<tr>
-									<td>{{value}}</td>
-									{{#each parentChildren this}}
-										<td>
-											<select class="dropdown-content" id="attribute-type-{{this}}-{{getValue}}">
-												<option value="{{getValueAssigned this}}" selected="selected">{{getValueAssigned this}}</option>
-												{{#with getAttById this}}
-													{{#each getValues _id}}
-														<option value="{{value}}">{{value}}</option>
-													{{/each}}
-												{{/with}}
-											</select>
-										</td>
-									{{/each}}
-									<td class="align-right"><i class='fa fa-trash'></i></td></tr>
-							{{/each}}
-						</tbody>
-					</table>
-					{{/with}}
-				</div>
+				{{#with getVA}}
+					{{> reactiveTable collection=content class="table table-bordered table-hover" settings=settings}}
+				{{/with}}
 			</ol>
 		{{/if}}
 	</div>

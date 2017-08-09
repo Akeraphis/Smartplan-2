@@ -16,34 +16,16 @@ Template.Attributes_tables.helpers({
 		}
 		return res;
 	},
-	'getAtt': function(){
-		var attid = FlowRouter.getParam('attid');
-		return Attributes.findOne({_id : attid});
+	'getVA' : function(){
+		var id = FlowRouter.getParam('attid');
+		return ValuesAssignments.findOne({attribute : id});
 	},
-	'getName' : function(att_id){
-		var att= Attributes.findOne({_id : att_id});
-		if (att){
-			return att.name;
-		}
-	},
-	'parentChildren': function(val, parentContext){
-		return Template.parentData(1).children;
-	},
-	'getAttById': function(id){
-		return Attributes.findOne({_id : id});
-	},
-	'getValueAssigned': function(id){
-		res = "";
-		/*_.forEach(Template.parentData(1), function(rel){
-			if(rel._id==id){
-				res = rel.value;
-				ValuesAssignments.findOne({})
-			}
-		});*/
-		return res;
-	},
-	'getValues' : function(att_id){
-		return Values.find({attribute : att_id});
+	'settings' : function() {
+		return  {
+			showFilter: true,
+			showNavigation:'auto',
+			rowsPerPage: 50,
+		};
 	},
 });
 
@@ -52,9 +34,58 @@ Template.Attributes_tables.events({
 		var att_id = FlowRouter.getParam("attid");
 		Meteor.call("delete_value", att_id, this.value);
 	},
-	'change .dropdown-content': function(e){
-		console.log('change : ', this, e.target.value, Template.parentData(1));
-	}
+	//Double click in a cell to edit element
+	'dblclick .reactive-table tbody tr': function (event) {
+
+		var text = event.target.innerHTML;
+		var selectList = document.createElement("select");
+		
+		//Remove the _id out of the json object
+		var myObj = this;
+		delete myObj._id;
+
+		//Set json in Session to catch after edit
+		Session.set("editCell", myObj);
+		event.target.innerHTML="";
+		selectList.className = "dropdown-content";
+		Session.set("column_name", event.target.className);
+		console.log(event.target.className);
+
+		//Add Option selected to the select
+		Meteor.call('getValues', event.target.className, function(err, res){
+			if(!err){
+				event.target.appendChild(selectList, event.target);
+				for (var i = 0; i < res.length; i++) {
+					var option = document.createElement("option");
+					option.value = res[i];
+					option.text = res[i];
+					selectList.appendChild(option);
+				}
+				selectList.focus();
+			}
+		});		
+	},
+	// When Loosing Focus, save value to the collection
+	'focusout .dropdown-content': function(event){
+		var att_id = FlowRouter.getParam('attid');
+		var temp = event.target.value;
+		event.target.outerHTML=temp;
+
+		console.log(event.target, Session.get("column_name"))
+
+		//Call method to update collection
+		Meteor.call("updateValuesAssignments", att_id, temp, Session.get("column_name"),  Session.get("editCell"));
+	},
+	'keypress .dropdown-content': function(event){
+		if (event.keyCode==13) {
+			var app_id = FlowRouter.getParam('id');
+			var temp = event.target.value;
+			event.target.outerHTML=temp;
+			
+			//Call method to update collection
+			//Meteor.call("updateValuesAssignments", app_id, temp, this.label, Session.get("editCell"));
+		}
+	},
 })
 
 Template.newValue.events({

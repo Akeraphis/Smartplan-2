@@ -24,6 +24,7 @@ Template.Attributes_list.events({
 		document.getElementById('attribute-type-'+this._id).value = att.type;
 		document.getElementById('attribute-text-'+this._id).value = att.desc;
 		document.getElementById('attribute-parent-'+this._id).value = att.parent;
+		document.getElementById('attribute-parent-'+this._id).disabled = true;
 	},
 	'click #edit-att': function(e){
 
@@ -64,6 +65,7 @@ Template.newAttribute.events({
 						.prop("checked", "")
 						.end();
 				});
+				FlowRouter.go("/applications/editor/"+id+'/'+this._id);
 			}
 			else{
 				console.log(err);
