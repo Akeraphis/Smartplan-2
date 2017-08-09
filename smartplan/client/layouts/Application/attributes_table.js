@@ -29,10 +29,6 @@ Template.Attributes_tables.helpers({
 });
 
 Template.Attributes_tables.events({
-	'click .fa-trash': function(){
-		var att_id = FlowRouter.getParam("attid");
-		Meteor.call("delete_value", att_id, this.value);
-	},
 	//Double click in a cell to edit element
 	'dblclick .reactive-table tbody tr': function (event) {
 
@@ -71,7 +67,17 @@ Template.Attributes_tables.events({
 		//If clicked on the first colulmn we would like to have a simple input text
 		else{
 			var text = event.target.innerHTML;
-			var input = document.createElement("input");
+			
+			//Input field
+			var input = document.createElement("input");			
+			input.className = "updateCell";
+			input.type = "text";
+			input.value = text;
+
+			//Delete button
+			var deleteButton = document.createElement("button");
+			deleteButton.className = "delete-Att";
+			deleteButton.innerHTML = "<i class='fa fa-trash'></i>";
 			
 			//Remove the _id out of the json object
 			var myObj = this;
@@ -80,11 +86,10 @@ Template.Attributes_tables.events({
 			//Set json in Session to catch after edit
 			Session.set("editCell", myObj);
 			Session.set("column_name", event.target.className);
-			input.className = "updateCell";
-			input.type = "text";
-			input.value = text;
+
 			event.target.innerHTML="";
 			event.target.appendChild(input, event.target);
+			event.target.appendChild(deleteButton, event.target);
 			input.focus();
 		}		
 	},
@@ -133,6 +138,11 @@ Template.Attributes_tables.events({
 			}
 		}
 	},
+	'click .delete-Att': function(event){
+		var att_id = FlowRouter.getParam('attid');
+		console.log(att_id, Session.get("editCell"));
+		Meteor.call("deleteValue", att_id, Session.get("editCell"))
+	}
 })
 
 Template.newValue.events({

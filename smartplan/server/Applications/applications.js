@@ -48,8 +48,19 @@ Meteor.methods({
 		content[att.name]=value;
 		ValuesAssignments.update({attribute : att_id},{$push : {content : content}});
 	},
-	"delete_value": function(val_id){
-		//Values.remove({_id : val_id});
+	"deleteValue": function(att_id, val){
+		var att_name = Attributes.findOne({_id : att_id}).name;
+		var content = ValuesAssignments.findOne({attribute : att_id}).content;
+		var res = [];
+
+		//Update the VA where the value is deleted
+		_.forEach(content, function(c){
+			if(c[att_name] != val[att_name]){
+				res.push(c);
+			}
+		});
+
+		ValuesAssignments.update({attribute : att_id},{$set : {content : res}});
 	},
 	"create_all_values_assignments" : function(parent_id, child_id){
 		var chi = Attributes.findOne({_id : child_id});
