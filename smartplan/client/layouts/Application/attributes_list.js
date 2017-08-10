@@ -87,6 +87,10 @@ Template.newAttribute.events({
 			}
 		});
 	},
+	'click #import_from_dl': function(){
+		var app_id = FlowRouter.getParam('id');
+		FlowRouter.go('/applications/data_mapping/'+ app_id);
+	}
 });
 
 Template.new_att_modal.helpers({

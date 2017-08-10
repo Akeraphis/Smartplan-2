@@ -118,6 +118,13 @@ FlowRouter.route('/applications/editor/:id/:attid', {
 		BlazeLayout.render('ApplicationLayout', {main: 'Applications_Editor'});
 	}
 });
+
+FlowRouter.route('/applications/data_mapping/:id', {
+	name : 'applications_datamapping',
+	action(){
+		BlazeLayout.render('ApplicationLayout', {main: 'Applications_DataMapping'});
+	}
+});
 //--------------------------------------------------------------
 
 // Routes Market
