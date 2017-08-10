@@ -5,7 +5,9 @@
 				<h4>Values</h4>
 				{{> newValue}}
 				{{#with getVA}}
-					{{> reactiveTable collection=content class="table table-bordered table-hover" settings=settings}}
+					{{#if notEmpty content}}
+						{{> reactiveTable collection=content class="table table-bordered table-hover" settings=settings}}
+					{{/if}}
 				{{/with}}
 			</ol>
 		{{/if}}

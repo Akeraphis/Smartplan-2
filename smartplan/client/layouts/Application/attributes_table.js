@@ -26,6 +26,13 @@ Template.Attributes_tables.helpers({
 			rowsPerPage: 50,
 		};
 	},
+	'notEmpty': function(content){
+		var res = false;
+		if(content.length>0){
+			res=true;
+		}
+		return res;
+	}
 });
 
 Template.Attributes_tables.events({
@@ -140,8 +147,8 @@ Template.Attributes_tables.events({
 	},
 	'click .delete-Att': function(event){
 		var att_id = FlowRouter.getParam('attid');
-		console.log(att_id, Session.get("editCell"));
-		Meteor.call("deleteValue", att_id, Session.get("editCell"))
+		var app_id = FlowRouter.getParam('id');
+		Meteor.call("deleteValue", app_id, att_id, Session.get("editCell"))
 	}
 })
 

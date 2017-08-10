@@ -14,7 +14,15 @@ Template.Attributes_list.events({
 	},
 	'click .delete-attribute': function(e){
 		var id = FlowRouter.getParam('id');
-		Meteor.call("delete_Att", id, this._id);
+		var att_id = FlowRouter.getParam('attid');
+		Meteor.call("delete_Att", id, att_id, function(err, res){
+			if(!err){
+				FlowRouter.go('/applications/editor/'+id);
+			}
+			else{
+				console.log('Error in deleting attribute : '+err);
+			}
+		});
 	},
 	'click .edit-attribute': function(e){
 		$('#myModal_'+this._id).modal('show');
@@ -65,7 +73,8 @@ Template.newAttribute.events({
 						.prop("checked", "")
 						.end();
 				});
-				FlowRouter.go("/applications/editor/"+app_id+'/'+res);
+				//Caused modal not to be closed
+				//FlowRouter.go("/applications/editor/"+app_id+'/'+res);
 			}
 			else{
 				console.log(err);

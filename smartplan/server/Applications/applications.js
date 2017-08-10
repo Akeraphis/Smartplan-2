@@ -11,12 +11,12 @@ Meteor.methods({
 		Applications.remove({_id : app_id});
 	},
 	//---------------------------------------------------
-	// Methods on Applications
+	// Methods on Attributes
 	//---------------------------------------------------
 	'create_attribute' : function(app_id, name, type, desc, parent){
 		var att_id = Attributes.insert({application : app_id, name : name, type : type, desc : desc, parent: parent, children : []})
 		if(parent != 'None'){
-			Attributes.update({_id : parent}, {$push : {children : att_id}});
+			Attributes.update({_id : parent}, {$push : {children : {_id : att_id}}});
 			Meteor.call("create_all_values_assignments", parent, att_id);
 		}
 		Applications.update({_id : app_id}, {$push : {attributes : {_id : att_id}}});
@@ -28,10 +28,36 @@ Meteor.methods({
 		Attributes.update({_id : att_id}, {$set : {name : name, type : type, desc : desc}});
 	},
 	'delete_Att' : function(app_id, att_id){
+		
+		//Delete VA
 		ValuesAssignments.remove({attribute : att_id});
+		
+		//Remove attribute reference in the application
 		Applications.update({_id : app_id}, {$pull : {attributes : {_id : att_id}}});
-		Attributes.update({_id : att}, {$pull : {children : att_id}});
+		
+		//Remove references in VA
+		Meteor.call("getAtt", att_id, function(err, res){
+			if(!err){
+				if(res.parent != "None"){
+					var content = ValuesAssignments.findOne({attribute : res.parent}).content;
+					var res2 = [];
+					var att_name = res.name;
+					_.forEach(content, function(c){
+						delete c[att_name];
+						res2.push(c);
+					});
+					ValuesAssignments.update({attribute : res.parent}, {$set : {content : res2}});
+				}
+			}
+		});
+
+		//Remove reference of child in other attributes
+		Attributes.update({application : app_id}, {$pull : {children : { _id : att_id}}});
+
+		//Remove reference of parents
 		Attributes.update({parent : att_id}, {$set : {parent : "None"}});
+
+		//Remove attribute
 		Attributes.remove({_id : att_id});
 	},
 	//---------------------------------------------------
@@ -41,15 +67,16 @@ Meteor.methods({
 		var att = Attributes.findOne({_id : att_id});
 		var content = {};
 		_.forEach(att.children, function(c){
-			var cname = Attributes.findOne({_id : c}).name
+			var cname = Attributes.findOne({_id : c._id}).name
 			content[c.name] = "";
 		});
 		var att_name= att.name;
 		content[att.name]=value;
 		ValuesAssignments.update({attribute : att_id},{$push : {content : content}});
 	},
-	"deleteValue": function(att_id, val){
-		var att_name = Attributes.findOne({_id : att_id}).name;
+	"deleteValue": function(app_id, att_id, val){
+		var att = Attributes.findOne({_id : att_id});
+		var att_name = att.name;
 		var content = ValuesAssignments.findOne({attribute : att_id}).content;
 		var res = [];
 
@@ -61,6 +88,21 @@ Meteor.methods({
 		});
 
 		ValuesAssignments.update({attribute : att_id},{$set : {content : res}});
+
+		//Update all VA where the value deleted is assigned
+		var att_parent = att.parent;
+		var va = ValuesAssignments.findOne({attribute : att_parent});
+		var res=[];
+
+		_.forEach(va.content, function(c){
+			
+			if(c[att_name]==val[att_name]){
+				c[att_name] = "";
+			}
+			res.push(c);
+		});
+
+		ValuesAssignments.update({attribute : att_parent}, {$set : {content : res}});
 	},
 	"create_all_values_assignments" : function(parent_id, child_id){
 		var chi = Attributes.findOne({_id : child_id});
@@ -86,7 +128,6 @@ Meteor.methods({
 		return res;
 	},
 	"updateValuesAssignments": function(att_id, value, column, newObj){
-		console.log(att_id, value, newObj);
 		var att_name = Attributes.findOne({_id : att_id}).name;
 		var va = ValuesAssignments.findOne({attribute : att_id});
 		res = [];
@@ -98,6 +139,9 @@ Meteor.methods({
 		});
 
 		ValuesAssignments.update({attribute : att_id}, {$set : {content : res}});
+	},
+	"getAtt" :function(att_id){
+		return Attributes.findOne({_id : att_id});
 	}
 });
 
