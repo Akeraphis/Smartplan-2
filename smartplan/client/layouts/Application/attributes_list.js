@@ -1,4 +1,4 @@
-Template.Attributes_list.helpers({
+Template.accordeon_list.helpers({
 	'getName' : function(att_id){
 		var att= Attributes.findOne({_id : att_id});
 		if (att){
@@ -8,9 +8,14 @@ Template.Attributes_list.helpers({
 });
 
 Template.Attributes_list.events({
-	'click .list-group-item': function(e){
+	'click .panel-title': function(e){
 		var id = FlowRouter.getParam('id');
 		FlowRouter.go("/applications/editor/"+id+'/'+this._id);
+	},
+	'focusout .panel-title': function(e){
+		var id = FlowRouter.getParam('id');
+		//FlowRouter.go("/applications/editor/"+id);
+		$("#details-"+this._id).collapse('hide');
 	},
 	'click .delete-attribute': function(e){
 		var id = FlowRouter.getParam('id');

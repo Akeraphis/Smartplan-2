@@ -32,6 +32,10 @@ Template.Attributes_tables.helpers({
 			res=true;
 		}
 		return res;
+	},
+	"getName" : function(){
+		var att_id = FlowRouter.getParam('attid');
+		return Attributes.findOne({_id : att_id}).name;
 	}
 });
 
