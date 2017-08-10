@@ -33,6 +33,7 @@ Template.Attributes_list.events({
 		document.getElementById('attribute-text-'+this._id).value = att.desc;
 		document.getElementById('attribute-parent-'+this._id).value = att.parent;
 		document.getElementById('attribute-parent-'+this._id).disabled = true;
+		document.getElementById('attribute-name-'+this._id).disabled = true;
 	},
 	'click #edit-att': function(e){
 
