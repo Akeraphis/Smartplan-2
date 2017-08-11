@@ -8,10 +8,6 @@ Template.accordeon_list.helpers({
 });
 
 Template.Attributes_list.events({
-	'click .panel-title': function(e){
-		var id = FlowRouter.getParam('id');
-		FlowRouter.go("/applications/editor/"+id+'/'+this._id);
-	},
 	'focusout .panel-title': function(e){
 		var id = FlowRouter.getParam('id');
 		//FlowRouter.go("/applications/editor/"+id);
@@ -86,10 +82,6 @@ Template.newAttribute.events({
 				console.log(err);
 			}
 		});
-	},
-	'click #import_from_dl': function(){
-		var app_id = FlowRouter.getParam('id');
-		FlowRouter.go('/applications/data_mapping/'+ app_id);
 	}
 });
 
@@ -104,5 +96,20 @@ Template.edit_att_modal.helpers({
 	'getAtt': function(){
 		var app_id = FlowRouter.getParam("id");
 		return 	Attributes.find({application : app_id});
+	}
+});
+
+Template.import_from_dl_modal.helpers({
+	'getDL' : function(){
+		return DataLayers.find({});
+	},
+	'getDT' : function(){
+		return DataTables.find({dataLayer : Session.get("DL")});
+	}
+});
+
+Template.import_from_dl_modal.events({
+	'change #select_dl': function(){
+		Session.set("DL", DataLayers.find({_id : this._id}));
 	}
 })
