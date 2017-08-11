@@ -1,3 +1,5 @@
+Session.set("DL", []);
+
 Template.accordeon_list.helpers({
 	'getName' : function(att_id){
 		var att= Attributes.findOne({_id : att_id});
@@ -104,12 +106,23 @@ Template.import_from_dl_modal.helpers({
 		return DataLayers.find({});
 	},
 	'getDT' : function(){
-		return DataTables.find({dataLayer : Session.get("DL")});
+		var res = Session.get("DL")
+		return res;
 	}
 });
 
 Template.import_from_dl_modal.events({
-	'change #select_dl': function(){
-		Session.set("DL", DataLayers.find({_id : this._id}));
-	}
+	'change #select_dl': function(e){
+		Session.set("DL", DataLayers.findOne({_id : e.target.value}).dataTables);
+	},
+	'click #import_att_from_dl': function(e){
+		var res = [];
+		var checks = document.getElementsByClassName('form-check-input');
+		_.forEach(checks, function(check){
+			if(check.checked){
+				res.push(check.value);
+			}
+		});
+		Meteor.call("create_att_from_dl", res);
+	},
 })

@@ -149,27 +149,28 @@
 						<div class="form-group">
 							<label for="message-text" class="control-label">Data Layer:</label>
 							<select class="dropdown-content" id="select_dl">
+								<option value="None"></option>
 								{{#each getDL}}
-									<option value="{{_id}}">{{name}}</option>
+									<option value="{{_id}}" class="option_dl">{{name}}</option>
 								{{/each}}
 							</select>
 						</div>
-						<div class="form-group"><label for="message-text" class="control-label">Data Table:</label>
-							<fieldset>
+						<div class="form-group">
+							<fieldset class="form-group">
 								<legend>Select the Data Tables you want to import :</legend>
-								{{#each getDT}}
-									<div>
-										<input type="checkbox" id="{{dt_id}}" name="data-table" value="{{dt_id}}">
-										<label for="{{dt_id}}">{{name}}</label>
-									</div>
-								{{/each}}
+									{{#each getDT}}
+										<div class="form-group">
+											<input type="checkbox" class="form-check-input" id="{{dt_id}}" name="data-table" value="{{dt_id}}" checked="false">
+											<label for="{{dt_id}}" class="form-check-label">{{name}}</label>
+										</div>
+									{{/each}}
 							</fieldset>
 						</div>
 					</form>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-					<button type="button" class="btn btn-primary" id="import-att-from-dl">Import</button>
+					<button type="button" class="btn btn-primary" id="import_att_from_dl">Import</button>
 				</div>
 			</div>
 		</div>

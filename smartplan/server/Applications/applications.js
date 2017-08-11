@@ -60,6 +60,12 @@ Meteor.methods({
 		//Remove attribute
 		Attributes.remove({_id : att_id});
 	},
+	'create_att_from_dl': function(dts){
+		_.forEach(dts, function(dt){
+			var dt0 = (DataTables.findOne({_id : dt}).content)[0];
+			console.log(Object.keys(dt0))
+		});
+	},
 	//---------------------------------------------------
 	// Methods on Values
 	//---------------------------------------------------
