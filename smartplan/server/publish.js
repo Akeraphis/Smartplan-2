@@ -24,4 +24,8 @@ Meteor.publish('attributes_for_app', function(app_id){
 
 Meteor.publish('values_assignments_for_app', function(app_id){
 	return ValuesAssignments.find({application : app_id});
-})
+});
+
+Meteor.publish('links_dl_attributes_for_app', function(app_id){
+	return LinksDLAttributes.find({application : app_id});
+});

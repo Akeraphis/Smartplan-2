@@ -3,12 +3,15 @@
 		{{#if hasAtt}}
 			<ol class="breadcrumb">
 				<h4>Values - {{getName}}</h4>
-				{{> newValue}}
+				{{#with getAtt}}
+					{{> editionAttribute}}
+				{{/with}}
 				{{#with getVA}}
 					{{#if notEmpty content}}
 						{{> reactiveTable collection=content class="table table-bordered table-hover" settings=settings}}
 					{{/if}}
 				{{/with}}
+				{{> newValue}}
 			</ol>
 		{{/if}}
 	</div>
@@ -18,6 +21,12 @@
 	<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal2" title="Create New Value"><i class="fa fa-plus"></i></button>
 	<br/><br/>
 	{{> new_value_modal}}
+</template>
+
+<template name="editionAttribute">
+	<button type="button" class="btn btn-primary btn-lg" id="edit-attribute" title="Edit Attribute"><i class='fa fa-pencil'></i></button>
+	<button type="button" class="btn btn-primary btn-lg" id="delete-attribute" title="Delete Attribute"><i class='fa fa-trash'></i></button>
+	{{> edit_att_modal}}
 </template>
 
 <template name="new_value_modal">
@@ -39,6 +48,53 @@
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
 					<button type="button" class="btn btn-primary" id="new-val">Create</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</template>
+
+<template name="edit_att_modal">
+	<div class="modal fade" id="myModal_{{_id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title" id="myModalLabel">Edit Attribute</h4>
+				</div>
+				<div class="modal-body">
+					<form>
+						<div class="form-group">
+							<label for="message-text" class="control-label">Parent:</label>
+							<select class="dropdown-content" id="attribute-parent-{{_id}}">
+								<option value="None" selected="selected"><b>None</b></option>
+								{{#each getAtt}}
+									<option value="{{_id}}">{{name}}</option>
+								{{/each}}
+							</select>
+						</div>
+						<div class="form-group">
+							<label for="recipient-name" class="control-label">Name:</label>
+							<input type="text" class="form-control" id="attribute-name-{{_id}}">
+						</div>
+						<div class="form-group">
+							<label for="message-text" class="control-label">Description:</label>
+							<textarea class="form-control" id="attribute-text-{{_id}}"></textarea>
+						</div>
+						<div class="form-group">
+							<label for="message-text" class="control-label">Type:</label>
+							<select class="dropdown-content" id="attribute-type-{{_id}}">
+								<option value="String" selected="selected">String</option>
+								<option value="Real">Real</option>
+								<option value="Date">Date</option>
+								<option value="Timeseries">Timeseries</option>
+							</select>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+					<button type="button" class="btn btn-primary" id="edit-att">Update</button>
 				</div>
 			</div>
 		</div>

@@ -36,6 +36,10 @@ Template.Attributes_tables.helpers({
 	"getName" : function(){
 		var att_id = FlowRouter.getParam('attid');
 		return Attributes.findOne({_id : att_id}).name;
+	},
+	'getAtt' : function(){
+		var att_id = FlowRouter.getParam('attid');
+		return Attributes.findOne({_id : att_id});
 	}
 });
 
@@ -153,7 +157,31 @@ Template.Attributes_tables.events({
 		var att_id = FlowRouter.getParam('attid');
 		var app_id = FlowRouter.getParam('id');
 		Meteor.call("deleteValue", app_id, att_id, Session.get("editCell"))
-	}
+	},
+	'click #edit-attribute': function(e){
+		var att_id = FlowRouter.getParam('attid');
+		$('#myModal_'+att_id).modal('show');
+		var att = Attributes.findOne({_id : att_id});
+
+		document.getElementById('attribute-name-'+att_id).value = att.name;
+		document.getElementById('attribute-type-'+att_id).value = att.type;
+		document.getElementById('attribute-text-'+att_id).value = att.desc;
+		document.getElementById('attribute-parent-'+att_id).value = att.parent;
+		document.getElementById('attribute-parent-'+att_id).disabled = true;
+		document.getElementById('attribute-name-'+att_id).disabled = true;
+	},
+	'click #delete-attribute': function(e){
+		var id = FlowRouter.getParam('id');
+		var att_id = FlowRouter.getParam('attid');
+		Meteor.call("delete_Att", id, att_id, function(err, res){
+			if(!err){
+				FlowRouter.go('/applications/editor/'+id);
+			}
+			else{
+				console.log('Error in deleting attribute : '+err);
+			}
+		});
+	},
 })
 
 Template.newValue.events({
@@ -184,5 +212,28 @@ Template.newValue.events({
 				console.log(err);
 			}
 		});
+	},
+});
+
+Template.edit_att_modal.helpers({
+	'getAtt': function(){
+		var app_id = FlowRouter.getParam("id");
+		return 	Attributes.find({application : app_id});
+	}
+});
+
+Template.edit_att_modal.events({
+	'click #edit-att': function(e){
+
+		var att_id = FlowRouter.getParam('attid');
+		//Retrieve attribute characteristics
+		var name = document.getElementById('attribute-name-'+att_id).value;
+		var type = document.getElementById('attribute-type-'+att_id).value;
+		var desc = document.getElementById('attribute-text-'+att_id).value;
+		var parent = document.getElementById('attribute-parent-'+att_id).value;
+
+		//Create Attribute
+		Meteor.call("edit_attribute", att_id, name, type, desc, parent);
+		$('#myModal_'+att_id).modal('hide');
 	},
 });

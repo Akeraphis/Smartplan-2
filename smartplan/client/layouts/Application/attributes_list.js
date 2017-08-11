@@ -15,41 +15,6 @@ Template.Attributes_list.events({
 		//FlowRouter.go("/applications/editor/"+id);
 		$("#details-"+this._id).collapse('hide');
 	},
-	'click .delete-attribute': function(e){
-		var id = FlowRouter.getParam('id');
-		var att_id = FlowRouter.getParam('attid');
-		Meteor.call("delete_Att", id, att_id, function(err, res){
-			if(!err){
-				FlowRouter.go('/applications/editor/'+id);
-			}
-			else{
-				console.log('Error in deleting attribute : '+err);
-			}
-		});
-	},
-	'click .edit-attribute': function(e){
-		$('#myModal_'+this._id).modal('show');
-		var att = Attributes.findOne({_id : this._id});
-
-		document.getElementById('attribute-name-'+this._id).value = att.name;
-		document.getElementById('attribute-type-'+this._id).value = att.type;
-		document.getElementById('attribute-text-'+this._id).value = att.desc;
-		document.getElementById('attribute-parent-'+this._id).value = att.parent;
-		document.getElementById('attribute-parent-'+this._id).disabled = true;
-		document.getElementById('attribute-name-'+this._id).disabled = true;
-	},
-	'click #edit-att': function(e){
-
-		//Retrieve attribute characteristics
-		var name = document.getElementById('attribute-name-'+this._id).value;
-		var type = document.getElementById('attribute-type-'+this._id).value;
-		var desc = document.getElementById('attribute-text-'+this._id).value;
-		var parent = document.getElementById('attribute-parent-'+this._id).value;
-
-		//Create Attribute
-		Meteor.call("edit_attribute", this._id, name, type, desc, parent);
-		$('#myModal_'+this._id).modal('hide');
-	},
 });
 
 Template.newAttribute.events({
@@ -94,13 +59,6 @@ Template.new_att_modal.helpers({
 	}
 });
 
-Template.edit_att_modal.helpers({
-	'getAtt': function(){
-		var app_id = FlowRouter.getParam("id");
-		return 	Attributes.find({application : app_id});
-	}
-});
-
 Template.import_from_dl_modal.helpers({
 	'getDL' : function(){
 		return DataLayers.find({});
@@ -116,6 +74,7 @@ Template.import_from_dl_modal.events({
 		Session.set("DL", DataLayers.findOne({_id : e.target.value}).dataTables);
 	},
 	'click #import_att_from_dl': function(e){
+		var app_id = FlowRouter.getParam("id");
 		var res = [];
 		var checks = document.getElementsByClassName('form-check-input');
 		_.forEach(checks, function(check){
@@ -123,6 +82,6 @@ Template.import_from_dl_modal.events({
 				res.push(check.value);
 			}
 		});
-		Meteor.call("create_att_from_dl", res);
+		Meteor.call("create_att_from_dl", app_id, res);
 	},
 })

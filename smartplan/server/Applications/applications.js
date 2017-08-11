@@ -14,7 +14,7 @@ Meteor.methods({
 	// Methods on Attributes
 	//---------------------------------------------------
 	'create_attribute' : function(app_id, name, type, desc, parent){
-		var att_id = Attributes.insert({application : app_id, name : name, type : type, desc : desc, parent: parent, children : []})
+		var att_id = Attributes.insert({application : app_id, name : name, type : type, desc : desc, imported : "false", parent: parent, children : []})
 		if(parent != 'None'){
 			Attributes.update({_id : parent}, {$push : {children : {_id : att_id}}});
 			Meteor.call("create_all_values_assignments", parent, att_id);
@@ -60,10 +60,22 @@ Meteor.methods({
 		//Remove attribute
 		Attributes.remove({_id : att_id});
 	},
-	'create_att_from_dl': function(dts){
+	'create_att_from_dl': function(app_id, dts){
+		var temp = [];
 		_.forEach(dts, function(dt){
 			var dt0 = (DataTables.findOne({_id : dt}).content)[0];
-			console.log(Object.keys(dt0))
+			temp = temp.concat(Object.keys(dt0));
+		});
+		//get unique values
+		var col_names = temp.filter((v, i, a) => a.indexOf(v) === i); 
+		console.log(temp, "column names : ", col_names);
+
+		Meteor.call("create_new_attribute_from_tables", app_id, col_names);
+		//Meteor.call("create_links_dl_attributes", dts);
+	},
+	'create_new_attribute_from_tables' : function(app_id, col_names){
+		_.forEach(col_names, function(col){
+			Meteor.call("create_attribute", app_id, col, "String", "Imported from Data Layer", "None");
 		});
 	},
 	//---------------------------------------------------
@@ -146,8 +158,13 @@ Meteor.methods({
 
 		ValuesAssignments.update({attribute : att_id}, {$set : {content : res}});
 	},
-	"getAtt" :function(att_id){
+	"getAtt" : function(att_id){
 		return Attributes.findOne({_id : att_id});
-	}
-});
+	},
+	//---------------------------------------------------
+	// Methods on Links DL Attributes
+	//---------------------------------------------------
+	"create_links_dt_attributes" : function(){
 
+	},
+});
