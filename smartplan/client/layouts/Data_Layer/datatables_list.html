@@ -1,0 +1,44 @@
+<template name="DataTables_list">
+	<div class="col-xs-4">
+		<ol class="breadcrumb">
+			<h4>Data Tables and Columns</h4>
+			{{> accordeon_list_DL}}
+		</ol>
+	</div>
+</template>
+
+<template name="accordeon_list_DL">
+	<div id="accordion" class="panel-group">
+		<div class="panel panel-default">
+			{{#each getDataLayers}}
+				<div class="panel-heading">
+					<h4 class="panel-title">
+					 	<i class="fa fa-list-ol"></i>
+					 	{{name}}
+					</h4>
+				</div>
+				<div id="{{_id}}" class="panel-main">
+					{{#each dataTables}}
+						<div class="panel-heading">
+							<h4 class="panel-title">
+								 <a data-toggle="collapse" data-parent="#accordion" href="#{{dt_id}}">
+								 	<i class="fa fa-table"></i>
+								 	{{name}}
+								 </a>
+							</h4>
+						</div>
+						<div id="{{dt_id}}" class="panel-collapse collapse">
+							<ul class="list-group">
+								{{#each getDTColumns dt_id}}
+									<li class="list-group-item">
+										{{this}}
+									</li>
+								{{/each}}
+							</ul>
+						</div>
+					{{/each}}
+				</div>
+			{{/each}}
+		</div>		
+	</div>
+</template>

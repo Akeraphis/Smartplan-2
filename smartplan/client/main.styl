@@ -1,14 +1,5 @@
 /* CSS declarations go here */
 
-form.form-check-input {
-   display: inline-block;
-   whitespace : no-wrap;
-}
-
-form.form-check-label {
-    display: inline-block;
-    whitespace : no-wrap;
-}
 
 normalize-css()
 
@@ -402,3 +393,21 @@ input, select, textarea
         a 
             color dark-purp
 
+
+.btn-primary-outline
+    background-color: transparent;
+    border-color: transparent;
+    default-bg: #fff;
+    color #333
+    text-decoration none
+    text-transform lowercase
+    padding none
+    border none
+    border-radius none
+    font-weight 800
+    shadow-level(0)
+    trans()
+    &:hover
+        background #ccc
+        border-color #ccc
+        shadow-level(1)

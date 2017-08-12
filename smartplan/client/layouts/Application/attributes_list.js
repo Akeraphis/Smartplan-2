@@ -6,8 +6,54 @@ Template.accordeon_list.helpers({
 		if (att){
 			return att.name;
 		}
-	}
+	},
+	'hasParentNone' : function(att_id){
+		var att=Attributes.findOne({_id : att_id});
+		if(att){
+			if (att.parent == "None"){
+				return true
+			}
+			else{
+				return false
+			}
+		}
+	},
+	'hasChildren': function(att_id){
+		var res = false;
+		var att = Attributes.findOne({_id : att_id});
+		if(att){
+			if(att.children.length>0){
+				res = true
+			}
+		}
+		return res
+	},
 });
+
+Template.recursive_panel.helpers({
+	'getChildren' : function(att_id){
+		var att = Attributes.findOne({_id : att_id});
+		if(att){
+			return att.children;
+		}
+	},
+	'getName' : function(att_id){
+		var att = Attributes.findOne({_id : att_id});
+		if (att){
+			return att.name;
+		}
+	},
+	'hasChildren': function(att_id){
+		var res = false;
+		var att = Attributes.findOne({_id : att_id});
+		if(att){
+			if(att.children.length>0){
+				res = true
+			}
+		}
+		return res
+	},
+})
 
 Template.Attributes_list.events({
 	'focusout .panel-title': function(e){

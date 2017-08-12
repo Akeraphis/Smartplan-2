@@ -62,6 +62,7 @@ Meteor.methods({
 	},
 	'create_att_from_dl': function(app_id, dts){
 		var temp = [];
+		
 		_.forEach(dts, function(dt){
 			var dt0 = (DataTables.findOne({_id : dt}).content)[0];
 			temp = temp.concat(Object.keys(dt0));

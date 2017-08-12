@@ -3,9 +3,8 @@
 		<ol class="breadcrumb">
 			<h4>Attributes</h4>
 			{{>newAttribute}}
-			{{#each attributes}}
-				{{> accordeon_list}}
-			{{/each}}
+			{{> accordeon_list}}
+			
 			{{>import_from_dl_modal}}
 		</ol>
 	</div>
@@ -67,25 +66,47 @@
 
 <template name="accordeon_list">
 	<div id="accordion" class="panel-group">
-		<div class="panel panel-default">
+		<div class="panel panel-default">	
 			<div class="panel-heading">
-				<h5 class="panel-title">
-					<a data-toggle="collapse" data-parent="#accordion" href="#details-{{_id}}">
-					{{getName _id}}
-					</a>
-				</h5>
+				<h4 class="panel-title">
+					 <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+					 	<i class="fa fa-list-ol"></i>
+					 	Attributes
+					 </a>
+				</h4>
 			</div>
-			<div id="details-{{_id}}" class="panel-collapse collapse">
-				<div class="panel-body">
-					<p class="text-right">
-						{{desc}}
-					</p>
-				</div>
+			<div id="collapseOne" class="panel-collapse collapse in">
+				{{#each attributes}}
+					{{#if hasParentNone _id}}
+						<ul class="list-group">
+							<li class="list-group-item">
+								<button class="btn-primary-outline">{{getName _id}}</button>
+							</li>
+							{{#if hasChildren _id}}
+								<li class="list-group-item">
+									{{> recursive_panel _id}}
+								</li>
+							{{/if}}
+						</ul>
+					{{/if}}
+				{{/each}}
 			</div>
-		</div>
+		</div>		
 	</div>
 </template>
 
+<template name="recursive_panel">
+	<ul class="list-group">
+	{{#each getChildren this}}
+		<li class="list-group-item">
+			<i class='fa fa-arrow-right'></i><button class="btn-primary-outline"> {{getName _id}}</button>
+		</li>
+		{{#if hasChildren _id}}
+			<li class="list-group-item">{{>recursive_panel _id}}</li>
+		{{/if}}
+	{{/each}}
+	</ul>
+</template>
 
 <template name="import_from_dl_modal">
 	<div class="modal fade" id="myModal_import_from_dl" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">

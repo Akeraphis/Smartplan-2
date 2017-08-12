@@ -9,5 +9,5 @@ Meteor.methods({
 			content.push(elem);
 		});
 		DataTables.update({_id: tab_id}, {content : content});
-	},
+	}
 });
