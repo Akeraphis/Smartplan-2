@@ -10,5 +10,5 @@ Template.Applications_DataMapping.onCreated(function(){
 Template.Applications_DataMapping.helpers({
 	'getApp' : function(){
 		return Applications.findOne({_id : FlowRouter.getParam('id')});
-	}
+	},
 });

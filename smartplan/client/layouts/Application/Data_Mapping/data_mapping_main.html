@@ -1,9 +1,12 @@
-<template name="Applications_DataMapping">
-	<div class="row">
+<template name="Applications_DataMapping">	
 	{{#with getApp}}
 		<h2>{{name}} - Data Mapping</h2><br/>
-		{{> DataTables_list}}
-		{{> Attributes_list}}
+		<div class="row">
+			{{> LinksDLAttributes_list}}
+		</div>
+		<div class="row">
+			{{> DataTables_list}}
+			{{> Attributes_list}}
+		</div>
 	{{/with}}
-	</div>
 </template>

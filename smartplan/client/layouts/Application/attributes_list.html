@@ -4,7 +4,6 @@
 			<h4>Attributes</h4>
 			{{>newAttribute}}
 			{{> accordeon_list}}
-			
 			{{>import_from_dl_modal}}
 		</ol>
 	</div>
@@ -66,7 +65,7 @@
 
 <template name="accordeon_list">
 	<div id="accordion" class="panel-group">
-		<div class="panel panel-default">	
+		<div class="panel panel-default" id="panel_attribute">
 			<div class="panel-heading">
 				<h4 class="panel-title">
 					 <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">

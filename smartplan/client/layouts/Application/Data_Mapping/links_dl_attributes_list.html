@@ -1,0 +1,68 @@
+<template name="LinksDLAttributes_list">
+	<div class="col-xs-12">
+		<ol class="breadcrumb">
+			<h4>Links Attributes - Data Layer</h4>
+			{{> newLinkAttDL}}
+		</ol>
+	</div>
+</template>
+
+<template name="newLinkAttDL">
+	<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModalDLAtt" title="Create New Attribute"><i class="fa fa-link"></i></button>
+	{{> modalDLAtt}}
+</template>
+
+<template name="modalDLAtt">
+	<div class="modal fade" id="myModalDLAtt" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title" id="myModalLabel">New Link Attribute with Data Table</h4>
+				</div>
+				<div class="modal-body">
+					<form>
+						<div class="form-group">
+							<label for="DL_selected" class="control-label">Data Layers</label>
+							<select class="dropdown-content" id="DL_selected">
+								<option value="None" selected="selected"></option>
+								{{#each getDL}}
+									<option value="{{_id}}">{{name}}</option>
+								{{/each}}
+							</select>
+							<label for="DT_selected" class="control-label">Data Tables</label>
+							<select class="dropdown-content" id="DT_selected">
+								{{#each getDT}}
+									<option value="{{dt_id}}">{{name}}</option>
+								{{/each}}
+							</select>
+							<label for="col_selected" class="control-label">Columns</label>
+							<select class="dropdown-content" id="col_selected">
+								{{#each getCols}}
+									<option value="{{this}}">{{this}}</option>
+								{{/each}}
+							</select>
+						</div>
+						<div class="form-group">
+							<label for="checkboxNewAtt" class="control-label">New Attribute ? <input type="checkbox" name="checkbox" id="check_new" checked></label>
+							{{#if notCheckedNewAtt}}
+								<br/>
+								<label for="attribute-parent" class="control-label">Attribute</label>
+								<select class="dropdown-content" id="attribute-parent">
+									<option value="None" selected="selected"><b>None</b></option>
+									{{#each getAtt}}
+										<option value="{{_id}}">{{name}}</option>
+									{{/each}}
+								</select>
+							{{/if}}
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+					<button type="button" class="btn btn-primary" id="new-att-dl-link">Create</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</template>
