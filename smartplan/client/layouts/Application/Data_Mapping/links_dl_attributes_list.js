@@ -1,5 +1,6 @@
 Session.set('DLSelected', "");
 Session.set('DTSelected', []);
+Session.set('checkedNewAtt', true);
 
 Template.modalDLAtt.helpers({
 	'getDL': function(){
@@ -19,13 +20,7 @@ Template.modalDLAtt.helpers({
 		return Attributes.find({application: FlowRouter.getParam('id')});
 	},
 	'notCheckedNewAtt': function(){
-		var check = document.getElementById("check_new");
-		if(check.checked){
-			return false;
-		}
-		else{
-			return true;
-		}
+		return !Session.get("checkedNewAtt");
 	}
 });
 
@@ -43,4 +38,12 @@ Template.modalDLAtt.events({
 			Session.set('DTSelected', Object.keys(dt.content[0]));
 		}
 	},
+	'change #check_new': function(e){
+		if(document.getElementById("check_new").checked){
+			Session.set("checkedNewAtt", true);
+		}
+		else{
+			Session.set("checkedNewAtt", false);	
+		}
+	}
 })
