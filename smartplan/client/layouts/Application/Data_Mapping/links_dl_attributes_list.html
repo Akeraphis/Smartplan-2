@@ -2,9 +2,26 @@
 	<div class="col-xs-12">
 		<ol class="breadcrumb">
 			<h4>Links Attributes - Data Layer</h4>
-			{{> newLinkAttDL}}
+			{{> newLinkAttDL}}<br/><br/>
+			{{> list_links_att_dl}}
 		</ol>
 	</div>
+</template>
+
+<template name="list_links_att_dl">
+	<table class="table table-bordered table-hovered">
+		<thead><th>Attribute</th><th>Data Table</th><th>Column Name</th><th>Delete</th></thead>
+		{{#each getLinks}}
+			<tr>
+				<td>{{getAttName attribute}}</td>
+				{{#with datatable}}
+					<td>{{getTableName _id}}</td>
+					<td>{{column}}</td>
+				{{/with}}
+				<td class="delete_link" id="{{_id}}"><i class="fa fa-trash"></i></td>
+			</tr>
+		{{/each}}
+	</table>
 </template>
 
 <template name="newLinkAttDL">
@@ -48,7 +65,7 @@
 							{{#if notCheckedNewAtt}}
 								<br/>
 								<label for="attribute-parent" class="control-label">Attribute</label>
-								<select class="dropdown-content" id="attribute-parent">
+								<select class="dropdown-content" id="attribute_linked">
 									<option value="None" selected="selected"><b>None</b></option>
 									{{#each getAtt}}
 										<option value="{{_id}}">{{name}}</option>

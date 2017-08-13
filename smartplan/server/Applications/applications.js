@@ -162,10 +162,4 @@ Meteor.methods({
 	"getAtt" : function(att_id){
 		return Attributes.findOne({_id : att_id});
 	},
-	//---------------------------------------------------
-	// Methods on Links DL Attributes
-	//---------------------------------------------------
-	"create_links_dt_attributes" : function(){
-
-	},
 });
