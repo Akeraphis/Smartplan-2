@@ -95,7 +95,18 @@ Template.newAttribute.events({
 				console.log(err);
 			}
 		});
-	}
+	},
+	'click #refresh_values_from_dl': function(e){
+		var app_id = FlowRouter.getParam("id");
+		Meteor.call("refresh_values_from_dl", app_id, function(err, res){
+			if(!err){
+				console.log(res);
+			}
+			else{
+				console.log(err);
+			}
+		});
+	},
 });
 
 Template.new_att_modal.helpers({
@@ -104,30 +115,3 @@ Template.new_att_modal.helpers({
 		return 	Attributes.find({application : app_id});
 	}
 });
-
-Template.import_from_dl_modal.helpers({
-	'getDL' : function(){
-		return DataLayers.find({});
-	},
-	'getDT' : function(){
-		var res = Session.get("DL")
-		return res;
-	}
-});
-
-Template.import_from_dl_modal.events({
-	'change #select_dl': function(e){
-		Session.set("DL", DataLayers.findOne({_id : e.target.value}).dataTables);
-	},
-	'click #import_att_from_dl': function(e){
-		var app_id = FlowRouter.getParam("id");
-		var res = [];
-		var checks = document.getElementsByClassName('form-check-input');
-		_.forEach(checks, function(check){
-			if(check.checked){
-				res.push(check.value);
-			}
-		});
-		Meteor.call("create_att_from_dl", app_id, res);
-	},
-})

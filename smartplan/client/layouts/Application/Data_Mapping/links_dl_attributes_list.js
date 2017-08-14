@@ -90,4 +90,4 @@ Template.list_links_att_dl.events({
 	'click .delete_link': function(){
 		LinksDLAttributes.remove({_id : this._id});
 	}
-})
+});
