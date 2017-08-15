@@ -59,7 +59,7 @@ Template.modalDLAtt.events({
 				$('#myModalDLAtt').modal('hide');
 				$('#myModalDLAtt').on('hidden.bs.modal', function (e) {
 					$(this)
-						.find("input,textarea")
+						.find("input,textarea,select")
 						.val('')
 						.end()
 						.find("input[type=checkbox], input[type=radio]")

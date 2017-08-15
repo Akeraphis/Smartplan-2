@@ -17,7 +17,7 @@ Meteor.methods({
 		var att_id = Attributes.insert({application : app_id, name : name, type : type, desc : desc, imported : "false", parent: parent, children : []})
 		if(parent != 'None'){
 			Attributes.update({_id : parent}, {$push : {children : {_id : att_id}}});
-			Meteor.call("create_all_values_assignments", parent, att_id);
+			Meteor.call("createEmptyValuesAssignments", parent, att_id);
 		}
 		Applications.update({_id : app_id}, {$push : {attributes : {_id : att_id}}});
 		ValuesAssignments.insert({application : app_id, attribute : att_id, content : []});
@@ -60,24 +60,13 @@ Meteor.methods({
 		//Remove attribute
 		Attributes.remove({_id : att_id});
 	},
-	'create_att_from_dl': function(app_id, dts){
-		var temp = [];
-		
-		_.forEach(dts, function(dt){
-			var dt0 = (DataTables.findOne({_id : dt}).content)[0];
-			temp = temp.concat(Object.keys(dt0));
-		});
-		//get unique values
-		var col_names = temp.filter((v, i, a) => a.indexOf(v) === i); 
-		console.log(temp, "column names : ", col_names);
-
-		Meteor.call("create_new_attribute_from_tables", app_id, col_names);
-		//Meteor.call("create_links_dl_attributes", dts);
-	},
 	'create_new_attribute_from_tables' : function(app_id, col_names){
 		_.forEach(col_names, function(col){
 			Meteor.call("create_attribute", app_id, col, "String", "Imported from Data Layer", "None");
 		});
+	},
+	"retrieveAttributesFromId": function(att_id){
+		Attributes.findOne({_id : att_id});
 	},
 	//---------------------------------------------------
 	// Methods on Values
@@ -123,7 +112,7 @@ Meteor.methods({
 
 		ValuesAssignments.update({attribute : att_parent}, {$set : {content : res}});
 	},
-	"create_all_values_assignments" : function(parent_id, child_id){
+	"createEmptyValuesAssignments" : function(parent_id, child_id){
 		var chi = Attributes.findOne({_id : child_id});
 		var va = ValuesAssignments.findOne({attribute : parent_id});
 		var contents = va.content;
@@ -158,6 +147,20 @@ Meteor.methods({
 		});
 
 		ValuesAssignments.update({attribute : att_id}, {$set : {content : res}});
+	},
+	"create_VA_from_parent_child": function(app_id, parent, child, child_name, assignment){
+		var att_name = Attributes.findOne({_id : parent}).name;
+		var va = ValuesAssignments.findOne({attribute : parent});
+		res = [];
+		_.forEach(va.content, function(c){
+			if(c[att_name]==assignment["parent"]){
+				c[child_name]=assignment["child"];
+			}
+			res.push(c);
+		});
+
+		ValuesAssignments.update({attribute : parent}, {$set : {content : res}});
+
 	},
 	"getAtt" : function(att_id){
 		return Attributes.findOne({_id : att_id});
