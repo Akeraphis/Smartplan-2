@@ -30,6 +30,16 @@ Template.accordeon_list.helpers({
 	},
 });
 
+Template.accordeon_list.events({
+	'click .list-group-item': function(e){
+		$('.list-group-item').on('click', function() {
+			$('.glyphicon', this)
+			.toggleClass('glyphicon-chevron-right')
+			.toggleClass('glyphicon-chevron-down');
+		});
+	},
+})
+
 Template.recursive_panel.helpers({
 	'getChildren' : function(att_id){
 		var att = Attributes.findOne({_id : att_id});
