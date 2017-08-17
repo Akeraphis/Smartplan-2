@@ -33,3 +33,4 @@ cfs:standard-packages
 session
 aslagle:reactive-table
 twbs:bootstrap
+raix:ui-dropped-event
