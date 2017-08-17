@@ -2,11 +2,11 @@ Meteor.methods({
 	//---------------------------------------------------
 	// Methods on Links DL Attributes
 	//---------------------------------------------------
-	"create_links_dt_attributes" : function(app_id, dt, col, isNewAtt, oldAtt){
+	"create_links_dt_attributes" : function(app_id, dt, col, isNewAtt, oldAtt, parentAtt){
 		var attId = "";
 		//if NewAtt is true, create the attribute and retrieve Id
 		if(isNewAtt){
-			attId = Meteor.call("create_attribute", app_id, col, "String", "imported from data layer", "None");
+			attId = Meteor.call("create_attribute", app_id, col, "String", "imported from data layer", parentAtt);
 		}
 		//else we just take the oldAtt id
 		else{

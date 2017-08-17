@@ -57,6 +57,9 @@ Meteor.methods({
 		//Remove reference of parents
 		Attributes.update({parent : att_id}, {$set : {parent : "None"}});
 
+		//Remove LDA
+		LinksDLAttributes.remove({attribute : att_id});
+
 		//Remove attribute
 		Attributes.remove({_id : att_id});
 	},

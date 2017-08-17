@@ -49,11 +49,12 @@ Template.modalDLAtt.events({
 		var newAtt = document.getElementById("check_new").checked;
 		var oldAttId = "";
 		var oldAtt = document.getElementById("attribute_linked");
+		var parentAtt = document.getElementById("parent_linked").value;
 		if(oldAtt){
 			oldAttId = oldAtt.value;
 		}
-		console.log(dt, newAtt, oldAttId, col);
-		Meteor.call("create_links_dt_attributes", app_id, dt, col, newAtt, oldAttId, function(err, res){
+		console.log(dt, newAtt, oldAttId, col, parentAtt);
+		Meteor.call("create_links_dt_attributes", app_id, dt, col, newAtt, oldAttId, parentAtt, function(err, res){
 			if(!err){
 				//Hide modal after attribute creation
 				$('#myModalDLAtt').modal('hide');
