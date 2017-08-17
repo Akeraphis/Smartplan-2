@@ -57,35 +57,84 @@ Meteor.methods({
 		ValuesAssignments.update({attribute : att_id}, {$set : {content : res}});
 	},
 	"createValuesfromLda" : function(app_id, att){
-		if(att.parent == "None"){
-			//For each link, create the unique values
-			Meteor.call("findLinksFromAtt", att._id, function(err, links){
-				if(!err){
-					_.forEach(links, function(link){
-						var contents = Meteor.call('retrieveContentTableFromLink', link);
-						Meteor.call("create_unique_values", app_id, contents, att, link);
+		if(att){
+			if(att.parent == "None"){
+				//For each link, create the unique values
+				Meteor.call("findLinksFromAtt", att._id, function(err, links){
+					if(!err){
+						_.forEach(links, function(link){
+							var contents = Meteor.call('retrieveContentTableFromLink', link);
+							Meteor.call("create_unique_values", app_id, contents, att, link);
+						});
+					}
+				});
+				//If there are children
+				if(att.children.length>0){
+					//Call the same method on all children
+					_.forEach(att.children, function(c){
+						Meteor.call("createValuesfromLda", app_id, Attributes.findOne({_id : c}));
 					});
 				}
-			});
-			//If there are children
-			if(att.children.length>0){
-				//Meteor.call("createValuesfromLda", app_id, att);
 			}
+			//else if there is a parent
+			else{
+				console.log("there is a parent for ", att.name);
+				//find the links for the specified attributes
+				Meteor.call("findLinksFromAtt", att._id, function(err, links){
+					if(!err){
+						//For each link, create the unique values for the specific attribute
+						_.forEach(links, function(link){
+							var contents = Meteor.call('retrieveContentTableFromLink', link);
+							Meteor.call("create_unique_values", app_id, contents, att, link);
+						});
+					}
+					
+					//We now need to determine if there is a common link for the parent in the same table and identify this table
+					var dTID, plink, clink = "";
+					Meteor.call("findLinksFromAtt", att.parent, function(err, parentLinks){
+						if(!err){
+							_.forEach(links, function(l){
+								_.forEach(parentLinks, function(pl){
+									if(l.datatable._id==pl.datatable._id){
+										plink = pl
+										clink = l
+										dTID = l.datatable._id;
+									}
+								});
+							});
+							console.log("the common table is : ", dTID);
+
+							//In this table, we need to create the assignments in the parent document
+							var dt = DataTables.findOne({_id : dTID}).content;
+							Meteor.call("create_all_VA_from_lda", app_id, dt, plink, clink, att);
+						}
+					});
+				});
+			}	
 		}
 	},
-	"create_all_VA_from_lda" : function(app_id, parent, child, assignments){
-		_.forEach(assignments, function(ass){
-			Meteor.call('create_VA_from_parent_child', app_id, parent, child, ass);
-		})
-	},
-	"isolateAssignments" : function(dt, parent, child){
+	"create_all_VA_from_lda" : function(app_id, dt, plink, clink, att){
+		
+		var attName = att.name;
+		var linkName = clink.datatable.column;
+		var parentName = Attributes.findOne({_id : att.parent}).name;
+		var linkParentName = plink.datatable.column;
+		console.log(attName, linkName, parentName, linkParentName);
+
+		//Find Value assignment of the parent
+		var parVA = ValuesAssignments.findOne({attribute : att.parent}).content;
 		var newContent = [];
+		_.forEach(parVA, function(c){
+			_.forEach(dt, function(dc){
+				var newObj = c;
+				if(c[parentName]==dc[linkParentName]){
+					newObj[attName]=dc[linkName];
+					newContent.push(newObj);
+				}
+			});
+		});
 
-		_.forEach(dt, function(l){
-			newContent.push({parent : l[parent], child : l[child]});
-		})
-
-		console.log("output : ", newContent);
-		return newContent;
-	}
+		console.log('result : ', newContent);
+		ValuesAssignments.update({attribute : att.parent},{$set : {content : newContent}});
+	},
 });
