@@ -168,4 +168,10 @@ Meteor.methods({
 	"getAtt" : function(att_id){
 		return Attributes.findOne({_id : att_id});
 	},
+	//---------------------------------------------------
+	// Methods on Timeseries
+	//---------------------------------------------------
+	"create_timeseries": function(app_id, name, type, desc){
+		Timeseries.insert({application : app_id, name : name, type : type, description : desc});
+	},
 });

@@ -7,6 +7,10 @@ Template.accordeon_list_ts.helpers({
 			return ts.name;
 		}
 	},
+	'getTimeseries': function(){
+		var app_id = FlowRouter.getParam('id');
+		return Timeseries.find({application : app_id});
+	}
 });
 
 Template.Timeseries_list.events({
@@ -41,8 +45,6 @@ Template.newTimeSeries.events({
 						.prop("checked", "")
 						.end();
 				});
-				//Caused modal not to be closed
-				//FlowRouter.go("/applications/editor/"+app_id+'/'+res);
 			}
 			else{
 				console.log(err);
