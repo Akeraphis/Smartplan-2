@@ -77,14 +77,18 @@
 				<div class="list-group list-group-root well">
 					{{#each attributes}}
 						{{#if hasParentNone _id}}
-							<a href="#{{_id}}" class="list-group-item" data-toggle="collapse">
-									<i class="glyphicon glyphicon-chevron-right"></i>
-									<button class="btn-primary-outline">{{getName _id}}</button>
-							</a>
 							{{#if hasChildren _id}}
-								<div class="list-group collapse" id={{_id}}>
+								<a href="#{{_id}}" class="list-group-item" data-toggle="collapse">
+										<i class="glyphicon glyphicon-chevron-right"></i>
+										<button class="btn-primary-outline">{{getName _id}}</button>
+								</a>
+								<div class="list-group collapse" id="{{_id}}" style="text-indent: 10px"	>
 									{{> recursive_panel _id}}
 								</div>
+							{{else}}
+								<a href="#{{_id}}" class="list-group-item">
+									<button class="btn-primary-outline">{{getName _id}}</button>
+								</a>
 							{{/if}}
 						{{/if}}
 					{{/each}}
@@ -96,14 +100,18 @@
 
 <template name="recursive_panel">
 	{{#each getChildren this}}
-		<a href="#{{_id}}" class="list-group-item" data-toggle="collapse">
-			<i class="glyphicon glyphicon-chevron-right"></i>
-			<button class="btn-primary-outline"> {{getName _id}}</button>
-		</a>
-		<div class="list-group collapse" id={{_id}}>
-			{{#if hasChildren _id}}
-				{{>recursive_panel _id}}
-			{{/if}}
-		</div>
+		{{#if hasChildren _id}}
+			<a href="#{{_id}}" class="list-group-item" data-toggle="collapse">
+				<i class="glyphicon glyphicon-chevron-right"></i>
+				<button class="btn-primary-outline"> {{getName _id}}</button>
+			</a>
+			<div class="list-group collapse" id="{{_id}}" style="text-indent: 10px">{{>recursive_panel _id}}</div>
+		{{else}}
+			<div style="text-indent: 20px">
+				<a href="#{{_id}}" class="list-group-item">
+					<button class="btn-primary-outline"> {{getName _id}}</button>
+				</a>
+			</div>
+		{{/if}}
 	{{/each}}
 </template>

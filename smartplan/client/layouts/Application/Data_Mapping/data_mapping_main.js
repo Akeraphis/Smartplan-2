@@ -23,6 +23,45 @@ Template.Applications_DataMapping.events({
 	},
 	'dropped .list-group': function(e, temp){
 		e.preventDefault();
-		console.log("dropped", this, e.target, Session.get("att_dragged"));
+		var closestElem = getClosest(e.target, '.list-group-item');	
+		var target_id = closestElem.href.split("#")[1]
+		var dt = (Session.get("att_dragged")).dt_id;
+		var col = (Session.get("att_dragged")).column;
+		var parentAtt = Attributes.findOne({_id : target_id}).parent;
+		Meteor.call("create_links_dt_attributes", FlowRouter.getParam("id"), dt, col, false, target_id, parentAtt);	
 	},
 });
+
+/**
+ * Get the closest matching element up the DOM tree.
+ * @private
+ * @param  {Element} elem     Starting element
+ * @param  {String}  selector Selector to match against
+ * @return {Boolean|Element}  Returns null if not match found
+ */
+var getClosest = function ( elem, selector ) {
+
+    // Element.matches() polyfill
+    if (!Element.prototype.matches) {
+        Element.prototype.matches =
+            Element.prototype.matchesSelector ||
+            Element.prototype.mozMatchesSelector ||
+            Element.prototype.msMatchesSelector ||
+            Element.prototype.oMatchesSelector ||
+            Element.prototype.webkitMatchesSelector ||
+            function(s) {
+                var matches = (this.document || this.ownerDocument).querySelectorAll(s),
+                    i = matches.length;
+                while (--i >= 0 && matches.item(i) !== this) {}
+                return i > -1;
+            };
+    }
+
+    // Get closest match
+    for ( ; elem && elem !== document; elem = elem.parentNode ) {
+        if ( elem.matches( selector ) ) return elem;
+    }
+
+    return null;
+
+};
