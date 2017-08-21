@@ -29,3 +29,7 @@ Meteor.publish('values_assignments_for_app', function(app_id){
 Meteor.publish('links_dl_attributes_for_app', function(app_id){
 	return LinksDLAttributes.find({application : app_id});
 });
+
+Meteor.publish('timeseries_for_app', function(app_id){
+	return Timeseries.find({application : app_id});
+});
