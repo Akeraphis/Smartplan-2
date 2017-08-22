@@ -3,7 +3,9 @@ Template.Applications_DataMapping.onCreated(function(){
 	self.autorun(function(){
 		var app_id = FlowRouter.getParam('id');
 		self.subscribe("attributes_for_app", app_id);
+		self.subscribe("facts_for_app", app_id);
 		self.subscribe("links_dl_attributes_for_app", app_id);
+		self.subscribe("links_dl_facts_for_app", app_id);
 	})
 });
 
@@ -63,5 +65,4 @@ var getClosest = function ( elem, selector ) {
     }
 
     return null;
-
 };

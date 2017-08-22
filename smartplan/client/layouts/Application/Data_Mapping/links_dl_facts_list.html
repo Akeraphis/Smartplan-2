@@ -1,0 +1,85 @@
+<template name="LinksDLFacts_list">
+	<div class="col-xs-12">
+		<ol class="breadcrumb">
+			<h4>Links Facts - Data Layer</h4>
+			{{> newLinkFactDL}}<br/><br/>
+			{{> list_links_fact_dl}}
+		</ol>
+	</div>
+</template>
+
+<template name="list_links_fact_dl">
+	<table class="table table-bordered table-hovered">
+		<thead><th>Fact</th><th>Data Table</th><th>Column Name</th><th>Delete</th></thead>
+		{{#each getLinks}}
+			<tr>
+				<td>{{getFactName fact}}</td>
+				{{#with datatable}}
+					<td>{{getTableName _id}}</td>
+					<td>{{column}}</td>
+				{{/with}}
+				<td class="delete_link" id="{{_id}}"><i class="fa fa-trash"></i></td>
+			</tr>
+		{{/each}}
+	</table>
+</template>
+
+<template name="newLinkFactDL">
+	<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModalDLFact" title="Create New Link in between Facts and Data Layer"><i class="fa fa-link"></i></button>
+	{{> modalDLFact}}
+</template>
+
+<template name="modalDLFact">
+	<div class="modal fade" id="myModalDLFact" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title" id="myModalLabel">New Link Fact with Data Table</h4>
+				</div>
+				<div class="modal-body">
+					<form>
+						<div class="form-group">
+							<label for="DL_selected_f" class="control-label">Data Layers</label>
+							<select class="dropdown-content" id="DL_selected_f">
+								<option value="None" selected="selected"></option>
+								{{#each getDL}}
+									<option value="{{_id}}">{{name}}</option>
+								{{/each}}
+							</select>
+							<label for="DT_selected_f" class="control-label">Data Tables</label>
+							<select class="dropdown-content" id="DT_selected_f">
+								{{#each getDT}}
+									<option value="{{dt_id}}">{{name}}</option>
+								{{/each}}
+							</select>
+							<label for="col_selected_f" class="control-label">Columns</label>
+							<select class="dropdown-content" id="col_selected_f">
+								{{#each getCols}}
+									<option value="{{this}}">{{this}}</option>
+								{{/each}}
+							</select>
+						</div>
+						<div class="form-group">
+							<label for="checkboxNewAtt" class="control-label">New Fact ? <input type="checkbox" name="checkbox" id="check_new_f" checked></label>
+							{{#if notCheckedNewFact}}
+								<br/>
+								<label for="fact_linked" class="control-label">Attribute</label>
+								<select class="dropdown-content" id="fact_linked">
+									<option value="None" selected="selected"><b>None</b></option>
+									{{#each getFact}}
+										<option value="{{_id}}">{{name}}</option>
+									{{/each}}
+								</select>
+							{{/if}}
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+					<button type="button" class="btn btn-primary" id="new-fact-dl-link">Create</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</template>

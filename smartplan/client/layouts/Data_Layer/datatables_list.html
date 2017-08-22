@@ -23,7 +23,7 @@
 							<h4 class="panel-title">
 								 <a data-toggle="collapse" data-parent="#accordion" href="#{{dt_id}}">
 								 	<i class="fa fa-table"></i>
-								 	{{name}}
+								 	{{name}} 	
 								 </a>
 							</h4>
 						</div>
@@ -31,7 +31,11 @@
 							<ul class="list-group" id="{{dt_id}}">
 								{{#each getDTColumns dt_id}}
 									<li class="list-group-item" draggable="true">
-										{{this}}
+										{{#if isLinkedToAttOrTs this}}
+											{{this}}
+										{{else}}
+								 			<b>{{this}}</b>
+								 		{{/if}}
 									</li>
 								{{/each}}
 							</ul>

@@ -137,4 +137,19 @@ Meteor.methods({
 		console.log('result : ', newContent);
 		ValuesAssignments.update({attribute : att.parent},{$set : {content : newContent}});
 	},
+	//---------------------------------------------------
+	// Methods on Links DL Attributes
+	//---------------------------------------------------
+	"create_links_dt_facts" : function(app_id, dt, col, isNewFact, oldFact){
+		var factId = "";
+		//if NewFact is true, create the fact and retrieve Id
+		if(isNewFact){
+			factId = Meteor.call("create_fact", app_id, col, "Imported", "imported from data layer");
+		}
+		//else we just take the oldFact id
+		else{
+			factId = oldFact;
+		}
+		LinksDLFacts.insert({application : app_id, fact : factId, datatable : {_id : dt, column : col}});
+	},
 });

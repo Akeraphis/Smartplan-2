@@ -3,7 +3,7 @@ Template.Applications_Editor.onCreated(function(){
 	self.autorun(function(){
 		var app_id = FlowRouter.getParam('id');
 		self.subscribe("attributes_for_app", app_id);
-		self.subscribe("timeseries_for_app", app_id);
+		self.subscribe("facts_for_app", app_id);
 	})
 });
 

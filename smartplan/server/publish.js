@@ -30,6 +30,14 @@ Meteor.publish('links_dl_attributes_for_app', function(app_id){
 	return LinksDLAttributes.find({application : app_id});
 });
 
+Meteor.publish('facts_for_app', function(app_id){
+	return Facts.find({application : app_id});
+});
+
+Meteor.publish('links_dl_facts_for_app', function(app_id){
+	return LinksDLFacts.find({application : app_id});
+});
+
 Meteor.publish('timeseries_for_app', function(app_id){
 	return Timeseries.find({application : app_id});
 });

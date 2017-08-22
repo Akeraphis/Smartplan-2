@@ -169,9 +169,9 @@ Meteor.methods({
 		return Attributes.findOne({_id : att_id});
 	},
 	//---------------------------------------------------
-	// Methods on Timeseries
+	// Methods on Facts
 	//---------------------------------------------------
-	"create_timeseries": function(app_id, name, type, desc){
-		Timeseries.insert({application : app_id, name : name, type : type, description : desc});
+	"create_fact": function(app_id, name, type, desc){
+		return Facts.insert({application : app_id, name : name, type : type, description : desc});
 	},
 });
