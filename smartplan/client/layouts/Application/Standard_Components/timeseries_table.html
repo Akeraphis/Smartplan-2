@@ -1,0 +1,14 @@
+<template name="Timeseries_tables">
+	<div class="col-xs-8">
+		{{#if hasFact}}
+			<ol class="breadcrumb">
+				<h4>Timeseries - {{getName}}</h4>
+				{{#with getTS}}
+					{{#if notEmpty values}}
+						{{> reactiveTable collection=values class="table table-bordered table-hover" settings=settings}}
+					{{/if}}
+				{{/with}}
+			</ol>
+		{{/if}}
+	</div>
+</template>

@@ -119,6 +119,13 @@ FlowRouter.route('/applications/editor/:id/:attid', {
 	}
 });
 
+FlowRouter.route('/applications/editor/:id/:attid/:factid', {
+	name : 'applications_editor_ts',
+	action(){
+		BlazeLayout.render('ApplicationLayout', {main: 'Applications_Editor'});
+	}
+});
+
 FlowRouter.route('/applications/data_mapping/:id', {
 	name : 'applications_datamapping',
 	action(){
