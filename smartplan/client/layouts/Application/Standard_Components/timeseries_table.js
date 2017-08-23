@@ -15,10 +15,6 @@ Template.Timeseries_tables.helpers({
 		}
 		return res;
 	},
-	'getTS' : function(){
-		var id = FlowRouter.getParam('factid');
-		return Timeseries.findOne({fact : id});
-	},
 	'settings' : function() {
 		return  {
 			showFilter: true,
@@ -26,19 +22,8 @@ Template.Timeseries_tables.helpers({
 			rowsPerPage: 50,
 		};
 	},
-	'notEmpty': function(content){
-		var res = false;
-		if(content.length>0){
-			res=true;
-		}
-		return res;
+	'getName' : function(){
+		var factid = FlowRouter.getParam("factid");
+		return Facts.findOne({_id : factid}).name;
 	},
-	"getName" : function(){
-		var fact_id = FlowRouter.getParam('factid');
-		return Facts.findOne({_id : fact_id}).name;
-	},
-	'getFact' : function(){
-		var fact_id = FlowRouter.getParam('factid');
-		return Facts.findOne({_id : fact_id});
-	}
 });

@@ -3,11 +3,7 @@
 		{{#if hasFact}}
 			<ol class="breadcrumb">
 				<h4>Timeseries - {{getName}}</h4>
-				{{#with getTS}}
-					{{#if notEmpty values}}
-						{{> reactiveTable collection=values class="table table-bordered table-hover" settings=settings}}
-					{{/if}}
-				{{/with}}
+				{{> reactiveTable collection=Timeseries class="table table-bordered table-hover" settings=settings}}
 			</ol>
 		{{/if}}
 	</div>
