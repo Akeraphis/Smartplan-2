@@ -14,6 +14,7 @@ Meteor.methods({
 		content[att.name]=value;
 		ValuesAssignments.update({attribute : att_id},{$push : {content : content}});
 	},
+	//Create the values for a newly period attribute created
 	"create_va_for_periods" : function(app_id, att_id, start, end, bucket){
 		var content = [];
 
@@ -23,18 +24,17 @@ Meteor.methods({
 		var truncStart = moment(start).startOf(bucket);
 		var truncEnd = moment(end).startOf(bucket);
 		
-		content.push({bucket : truncStart.format("D-M-YYYY")});
+		content.push({bucket : truncStart.format("D-M-YYYY"), day : truncStart.format("D"), dayOfWeek: truncStart.format("dddd"), month : truncStart.format("MMMM"), year : truncStart.format("YYYY")});
 
 		var temp = truncStart;
 		while(temp.toDate()<truncEnd.toDate()){
 			temp = temp.add(1, 'month');
-			content.push({bucket : temp.format("D-M-YYYY")});
+			content.push({bucket : temp.format("D-M-YYYY"), day : temp.format("D"), dayOfWeek: temp.format("dddd"), month : temp.format("MMMM"), year : temp.format("YYYY")});
 			console.log("temp : ", temp.toDate(), content);
 		}
 
 		console.log(truncStart.toDate(), truncEnd.toDate(), content);
 		ValuesAssignments.insert({application : app_id, attribute : att_id, content : content});
-
 	},
 	"deleteValue": function(app_id, att_id, val){
 		var att = Attributes.findOne({_id : att_id});
@@ -81,12 +81,15 @@ Meteor.methods({
 		ValuesAssignments.update({attribute : parent_id}, {$set : {content : res}});
 	},
 	"getValues" : function(att_name){
-		var id = Attributes.findOne({name : att_name})._id;
-		content = ValuesAssignments.findOne({attribute : id}).content;
+		var att = Attributes.findOne({name : att_name});
 		var res = [];
-		_.forEach(content, function(c){
-			res.push(c[att_name]);
-		})
+		if(att){
+			var id = att._id;
+			content = ValuesAssignments.findOne({attribute : id}).content;
+			_.forEach(content, function(c){
+				res.push(c[att_name]);
+			});
+		}
 		return res;
 	},
 	"updateValuesAssignments": function(att_id, value, column, newObj){

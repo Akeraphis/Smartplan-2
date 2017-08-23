@@ -63,20 +63,3 @@ Template.newFact.events({
 		});
 	},
 });
-
-// Template.new_facts_modal.helpers({
-// 	'isFactImported' : function(){
-// 		return Session.get("isFactImported")
-// 	},
-// });
-
-// Template.new_facts_modal.events({
-// 	'change #fact-type' : function(e){
-// 		if(e.target.value=="Imported"){
-// 			Session.set("isFactImported", true);
-// 		}
-// 		else{
-// 			Session.set("isFactImported", false);
-// 		}
-// 	}
-// })
