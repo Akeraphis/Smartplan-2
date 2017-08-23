@@ -52,17 +52,17 @@
 </template>
 
 <template name="accordeon_list_facts">
-	<div id="accordion_ts" class="panel-group">
-		<div class="panel panel-default" id="panel_attribute">
+	<div id="accordion_facts" class="panel-group">
+		<div class="panel panel-default" id="panel_facts">
 			<div class="panel-heading">
 				<h4 class="panel-title">
-					 <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+					 <a data-toggle="collapse" data-parent="#accordion" href="#collapseFact">
 					 	<i class="fa fa-list-ol"></i>
 					 	Facts
 					 </a>
 				</h4>
 			</div>
-			<div id="collapseOne" class="panel-collapse collapse in">
+			<div id="collapseFact" class="panel-collapse collapse in">
 				<div class="list-group list-group-root well">
 					{{#each getFacts}}
 						<a href="#{{_id}}" class="list-group-item">
