@@ -32,7 +32,6 @@ Template.Timeseries_tables.helpers({
 			ks.push(Object.keys(v)[0]);
 		});
 		ks.sort();
-		console.log(ks);
 
 		_.forEach(ks, function(k){
 			res.push({'key' : "values."+i+"."+k , 'label' : k});

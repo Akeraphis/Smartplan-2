@@ -8,8 +8,17 @@ Meteor.methods({
 
 		//for each imported facts of the application
 		_.forEach(facts, function(f){
-			Meteor.call("create_ts_from_ldf", app_id, f);
-		})
+			Meteor.call("create_ts_from_ldf", app_id, f, function(err, res){
+				if(!err){
+					var ts = Timeseries.find({fact : f._id}).fetch();
+					_.forEach(ts, function(t){
+						t.values.sort(function(a,b) {return (Object.keys(a) > Object.keys(b)) ? 1 : ((Object.keys(b) > Object.keys(a)) ? -1 : 0);} );
+						Timeseries.update({_id : t._id}, {$set : {values : t.values}})
+					});
+				}
+			});
+
+		});
 
 		return facts;
 	},
@@ -26,7 +35,10 @@ Meteor.methods({
 							var content = dt.content;
 							Meteor.call("create_timeseries_from_dt", app_id, fact, dt._id, content, link);
 						}
-					})
+					});
+				}
+				else{
+					console.log(err);
 				}
 			});
 		}
@@ -62,10 +74,10 @@ Meteor.methods({
 				
 			//Step 3. Find out if the timeseries is already existing, if not create it
 			var newVal = {};
-			var t = c[period.link_name];
+			var t = moment(c[period.link_name]).format("YYYY-MM-DD");
 			newVal[t] = c[link.datatable.column];
 
-			Timeseries.update(obj, {$push : {values : newVal} }, {upsert : true});
+			Timeseries.update(obj, {$addToSet : {values : newVal}}, {upsert : true});
 
 		});
 	},

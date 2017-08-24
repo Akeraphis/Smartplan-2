@@ -24,12 +24,12 @@ Meteor.methods({
 		var truncStart = moment(start).startOf(bucket);
 		var truncEnd = moment(end).startOf(bucket);
 		
-		content.push({bucket : truncStart.format("D-M-YYYY"), day : truncStart.format("D"), dayOfWeek: truncStart.format("dddd"), month : truncStart.format("MMMM"), year : truncStart.format("YYYY")});
+		content.push({bucket : truncStart.format("YYYY-MM-DD"), day : truncStart.format("D"), dayOfWeek: truncStart.format("dddd"), month : truncStart.format("MMMM"), year : truncStart.format("YYYY")});
 
 		var temp = truncStart;
 		while(temp.toDate()<truncEnd.toDate()){
 			temp = temp.add(1, 'month');
-			content.push({bucket : temp.format("D-M-YYYY"), day : temp.format("D"), dayOfWeek: temp.format("dddd"), month : temp.format("MMMM"), year : temp.format("YYYY")});
+			content.push({bucket : temp.format("YYYY-MM-DD"), day : temp.format("D"), dayOfWeek: temp.format("dddd"), month : temp.format("MMMM"), year : temp.format("YYYY")});
 			console.log("temp : ", temp.toDate(), content);
 		}
 
