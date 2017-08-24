@@ -35,7 +35,10 @@ Template.Attributes_tables.helpers({
 	},
 	"getName" : function(){
 		var att_id = FlowRouter.getParam('attid');
-		return Attributes.findOne({_id : att_id}).name;
+		var att = Attributes.findOne({_id : att_id});
+		if(att){
+			return att.name;
+		}
 	},
 	'getAtt' : function(){
 		var att_id = FlowRouter.getParam('attid');

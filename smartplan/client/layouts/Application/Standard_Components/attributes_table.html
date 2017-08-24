@@ -1,6 +1,6 @@
 <template name="Attributes_tables">
-	<div class="col-xs-8">
-		{{#if hasAtt}}
+	{{#if hasAtt}}
+		<div class="col-xs-8">
 			<ol class="breadcrumb">
 				<h4>Values - {{getName}}</h4>
 				{{#with getAtt}}
@@ -13,8 +13,8 @@
 				{{/with}}
 				{{> newValue}}
 			</ol>
-		{{/if}}
-	</div>
+		</div>
+	{{/if}}
 </template>
 
 <template name="newValue">

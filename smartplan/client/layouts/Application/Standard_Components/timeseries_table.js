@@ -16,14 +16,45 @@ Template.Timeseries_tables.helpers({
 		return res;
 	},
 	'settings' : function() {
-		return  {
+		var factid = FlowRouter.getParam("factid");
+		var res = [
+			{'key': 'PlanningItem', label: 'Product'},
+			{'key': 'Customer', label: 'Customer'},
+			{'key': 'Region', label: 'Region'},
+		];
+
+		var i=0;
+		var ts = Timeseries.findOne({fact : factid});
+
+		//Retrieve all object keys and sort
+		var ks = [];
+		_.forEach(ts.values, function(v){
+			ks.push(Object.keys(v)[0]);
+		});
+		ks.sort();
+		console.log(ks);
+
+		_.forEach(ks, function(k){
+			res.push({'key' : "values."+i+"."+k , 'label' : k});
+			i++;
+		});
+		
+		return{
 			showFilter: true,
 			showNavigation:'auto',
 			rowsPerPage: 50,
+			fields : res,
 		};
 	},
 	'getName' : function(){
 		var factid = FlowRouter.getParam("factid");
-		return Facts.findOne({_id : factid}).name;
+		var f = Facts.findOne({_id : factid});
+		if (f){
+			return f.name;
+		}
 	},
+	'myTimeseries' : function(){
+		var factid = FlowRouter.getParam("factid");
+		return Timeseries.find({fact : factid});
+	}
 });
